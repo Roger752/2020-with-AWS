@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<title>Login</title>
+<meta charset="UTF-8">
+<header th:replace="include/header"></header>
+<link rel="stylesheet" type="text/css" href="/css/login.css"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css">
+<link rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css'>
+<link rel='stylesheet' href='https://fonts.googleapis.com/css?family=Open+Sans:400,300,700'>
+<link rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css'>
+</head>
+<body>
+<!-- 	<section> -->
+<!-- 		<div th:if="${param.error}">Failed. Check userId and password.</div> -->
+<!-- 		<form th:action="@{/login}" method="post"> -->
+<!-- 			ID <input type="text" name="username" /> -->
+<!-- 			<!-- ID의 name이 바뀌면 로그인이 안된다. 이유는 나도 모른다. --> -->
+<!-- 			<br> Password <input type="password" name="password"> <br> -->
+<!-- 			<input type="submit" value="Login" /> -->
+<!-- 		</form> -->
+<!-- 		<a href="/member/signup">회원가입</a> -->
+<!-- 	</section> -->
+	
+	
+	<!-- partial:index.partial.html -->
+<body class="align">
+
+  <div class="grid">
+
+    <form th:action="@{/login}" method="post" class="form login">
+
+      <header class="login__header">
+        <h3 class="login__title">Login</h3>
+      </header>
+
+      <div class="login__body">
+
+        <div class="form__field">
+          <input type="name" placeholder="ID" name="username" >
+        </div>
+
+        <div class="form__field">
+          <input type="password" placeholder="PASSWORD" name="password">
+        </div>
+
+      </div>
+
+      <footer class="login__footer">
+        <input type="submit" value="Login">
+
+        <p><span class="icon icon--info">?</span><a href="/member/signup">회원가입</a></p>
+      </footer>
+
+    </form>
+
+  </div>
+<!--Footer-->
+<div class="push" style="height:150px;"></div>
+<footer class="footer" style="height:150px;" th:replace="include/footer"></footer>
+</body>
+<!-- partial -->
+</body>
+</html>

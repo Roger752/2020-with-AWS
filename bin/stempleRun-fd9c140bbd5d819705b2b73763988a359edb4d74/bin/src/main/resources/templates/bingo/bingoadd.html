@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="include/headShare">
+	<meta charset="UTF-8">
+</head>
+	
+<body>
+
+<!-- 헤더 -->
+<header th:replace="include/header"></header>
+
+<div class="container">
+    <h1>빙고 등록</h1>
+    <hr>
+    <br/>
+</div>
+
+<!--소제목-->
+
+<div class="container show-grid">
+    <div class="row">
+        <div class="col-md-10">
+        	<form action="/bingo/bingosave" method="post">
+            	<div>
+            		<label>지역 :</label>
+            		<select name="area_num" id="area_num">
+            			<option th:each="area:${areaList}" th:text=${area.area_name} th:value=${area.area_num}></option>
+            		</select>
+            	</div>
+            	
+                <div class="mb-7">
+                    <label for="title">제목</label>
+                    <input name="b_title" id="b_title" type="text" class="form-control" placeholder="제목을 입력해 주세요">
+                </div>
+                
+                <div class="mb-7">
+                    <label for="content">빙고설명</label>
+                    <textarea name="b_content" class="form-control" rows="8" placeholder="빙고에 대한 설명을 입력해주세요" ></textarea>
+                </div>
+        	</div>
+    </div>
+</div>
+			<div class="container">
+			    <hr>
+			    <div>
+			        <button type="button" class="btn btn btn-dark float-right " id="cancel">취소</button>
+			        <button type="submit" class="btn btn btn-dark float-right mr-1" id="save">저장</button>
+			    </div>
+			</div>
+		</form>
+
+<footer th:replace="include/footer"></footer>
+
+
+</body>
+</html>

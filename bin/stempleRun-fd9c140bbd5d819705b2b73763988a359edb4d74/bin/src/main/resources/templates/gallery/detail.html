@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="ko" xalns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+<title>Insert title here</title>
+</head>
+<style>
+.main {
+	width: 1135px;
+	height: 1000px;
+	border: solid 1px red;
+}
+
+ul li {
+	list-style-type: none;
+	float: left;
+}
+
+.btn-group button {
+	float: left;
+	font-size: 1.5em;
+	width: 300px;
+	height: 50px;
+	margin-bottom: 40px;
+	border: solid 1px red;
+}
+
+.size {
+	width: 950px;
+	height: 75px;
+}
+
+.list {
+	width: 900px;
+	height: 700px;
+	border: solid 1px red;
+	margin-left: 50px;
+}
+
+.underBar1 {
+	width: 780px;
+	text-align: left;
+	margin-left: 25px;
+}
+
+.recomm {
+	border: solid 1px red;
+	width: 780px;
+	height: 65px;
+	float: left;
+	margin-left: 50px;
+}
+
+.info1 {
+	border: solid 1px red;
+	width: 780px;
+	height: 65px;
+	float: left;
+	margin-left: 50px;
+}
+
+.info2 {
+	border: solid 1px red;
+	width: 780px;
+	height: 250px;
+	float: left;
+	margin-left: 50px;
+}
+.photo {
+	margin-left: 50px; 
+	margin-top: 0px; 
+	margin-right: 500px; 
+	border: solid 1px red;
+	width : 780px;
+	height : 400px;
+}
+</style>
+<body>
+	<div class="main">
+		<div class="size">
+			<ul>
+				<li style="margin-left: 40px; border: solid 1px red;">
+					<img src="이미지" width="30" height="30">
+				</li>
+				<li style="margin-left: 10px; margin-bottom: 8px; border: solid 1px red;" widht="200" height="30";>
+					사진마당 랭킹
+				</li>
+				<hr class="underBar1">
+			</ul>
+		</div>
+			<ul>
+				<li th:each="post:${detail}">
+					<div class="photo">
+						<ul>
+							<li><img src="이미지" width="740" height="400"></li>
+						</ul>
+					</div>
+					<div class="recomm">
+						<ul>
+							<li style="border: solid 1px red;"><p
+									th:text=${post.p_recommend}></li>
+							<li
+								style="float: right; margin-right: 25px; border: solid 1px red;"><button
+									type="button">정보보기</button></li>
+						</ul>
+					</div>
+					<div class="info1">
+						<ul>
+							<li style="border: solid 1px red;"><p
+									th:text=${post.p_title}></li>
+							<li
+								style="border: solid 1px red; float: right; margin-right: 25px;"><p
+									th:text=${post.m_num}></li>
+									<input id = "p_num" type="hidden" th:value=${post.p_num}>
+						</ul>
+					</div>
+					<div class="info2">
+						<ul>
+							<li style="border: solid 1px red; margin-left: 0px"><p th:text=${post.p_content}></p>
+						</ul>
+					</div>
+				</li>
+				<div style="margin-left:65px;">
+					<button id="list" type="button">목록으로</button>
+				<div style="float:right; margin-right : 275px;">
+					<button id="update" type="button">수정</button>
+					<button id="delete" type="button">삭제</button>
+				</div>
+			</div>
+
+			</ul>
+		
+	</div>
+
+</body>
+<script>
+	$('#delete').click(function(){
+		$(location).attr('href', 'http://localhost:4007/gallery/delete/' + $('#p_num').val());
+	})
+	$('#update').click(function(){
+		$(location).attr('href', 'http://localhost:4007/gallery/update/' + $('#p_num').val());
+	})
+	$('#list').click(function(){
+		$(location).attr('href', 'http://localhost:4007/gallery/list');
+	})
+
+</script>
+</html>
+

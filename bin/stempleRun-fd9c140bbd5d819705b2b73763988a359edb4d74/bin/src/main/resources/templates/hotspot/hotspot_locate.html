@@ -1,0 +1,110 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<script src="//code.jquery.com/jquery.min.js"></script>
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
+<script
+	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
+	
+<style>
+#search_global_photo{
+	display:inline;
+}
+.photo_search{
+	float:right;
+}
+.form-control{
+	text-align:center;
+	float:left;
+}
+div{
+	float:left;
+	display:inline;
+}
+#day{
+	width:100px;
+	border:1px solid gray;
+}
+#week{
+	width:100px;
+	border:1px solid gray;
+}
+#month{
+	width:100px;
+	border:1px solid gray;
+	margin-right:20px;
+}
+
+</style>
+</head>
+<body>
+		<section id="container">
+		<div id="day">
+			<a th:href="@{/}">일간 랭킹</a>
+		</div>
+		<div id="week">
+			<a th:href="@{/}">주간 랭킹</a>
+		</div>
+		<div id="month">
+			<a th:href="@{/}">월간 랭킹</a>
+		</div>
+		<div>
+			<a>계절별 랭킹</a>
+		</div>
+		<div id="search_global_photo">
+			<input type="text" class="form-control" placeholder="검색할 날짜 입력">
+		</div>
+		<div id="search">
+		<button class="photo_search" type="button">찾기</button>
+		</div>
+		</section>
+		<form action="/hotspot/hotspot_search">
+			<div class="search">
+				<input name="keywword" type="text" placeholder="검색할 내용">
+			</div>
+			<button>검색하기</button>
+		</form>
+	</div>
+	<br>
+	<br>
+	<hr>
+		<div class="center">
+		<div class="container">
+			<hr />
+			<section id="container">
+			<form role="form" method="get">
+				<table class="table table-hover">
+					<thead>
+					</thead>
+					<tbody>
+						<tr th:each="Post:${postList}">
+							<td th:text="${Post.p_title}"></td>
+							<td th:text="${Post.P_content}"></td>
+							<td th:text="${Post.p_day}"></td>
+							<td th:text="${Post.p_recommend}"></td>
+						</tr>
+					</tbody>
+				</table>
+			</form>
+			</section>
+		</div>
+	</div>
+	<form action="/board/search" method="GET">
+    <div>
+        <input name="keyword" type="text" placeholder="검색어를 입력해주세요">
+    </div>
+
+    <button>검색하기</button>
+</form>
+</body>
+</html>

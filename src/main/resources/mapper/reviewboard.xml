@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.stempleRun.db.mapper.ReviewBoardMapper">
+	
+	<!-- 목록 불러오기 -->
+	<select id="getList" resultType="com.stempleRun.db.dto.ReviewBoardVO">
+		select * from testtable order by bno asc
+	</select>
+	
+	<!-- 게시글 자세히-->	
+	<select id="reviewboardDetail" resultType="com.stempleRun.db.dto.ReviewBoardVO">
+		SELECT * FROM testtable WHERE BNO = #{bno}           
+	</select>
+	
+	<!-- 게시글 작성 -->
+	<insert id="reviewboardInsert" parameterType="com.stempleRun.db.dto.ReviewBoardVO">
+        INSERT INTO
+        testtable VALUES (testtable_seq.nextval,  #{title}, #{writer}, sysdate, 0, 0, #{memo}, #{filename}, #{type})
+	</insert>
+	
+	<!-- 게시글 수정 -->
+	<update id="reviewboardUpdate" parameterType="com.stempleRun.db.dto.ReviewBoardVO">
+        UPDATE testtable
+            SET
+            title = #{title},
+            type = #{type},
+            memo = #{memo}
+        WHERE BNO = #{bno}
+        <!-- 안되면 다른 수정사항 추가해야하는지 고려해야함 -->
+	</update>
+	
+	
+	<!-- 게시글 조회수 -->
+	<update id="reviewboardCount" parameterType="com.stempleRun.db.dto.ReviewBoardVO">
+	update testtable set
+	c_num = c_num+1
+	where bno = #{bno}
+	</update>
+	
+	<!-- 게시글 삭제 -->
+	<delete id="reviewboardDelete" parameterType="int">
+        DELETE FROM testtable WHERE BNO = #{bno}
+    </delete>
+    
+    <!-- 게시글 추천수 -->
+    <update id="getRecommend" parameterType="com.stempleRun.db.dto.ReviewBoardVO">
+		update testtable set 
+		a_chu = a_chu +1 
+		where bno = #{bno}
+	</update>
+	
+	<!-- 게시글 추천수 -->
+    <update id="admingetRecommend" parameterType="com.stempleRun.db.dto.ReviewBoardVO">
+		update testtable set 
+		n_chu = n_chu +1 
+		where bno = #{bno}
+	</update>
+	
+	
+	<!-- 작성자 -->
+	<select id="testWriter" parameterType="com.stempleRun.db.dto.ReviewBoardVO">	<!-- 작성자알아오기 -->
+		select writer from
+		testtable
+		where bno = #{bno}
+	</select>
+
+</mapper>

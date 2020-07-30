@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+<security:http pattern="/**/*.js" security="none" />
+<security:http pattern="/**/*.css" security="none" />
+<security:http pattern="/images/**" security="none" />
+<meta charset="UTF-8">
+<title>Story Register</title>
+</head>
+<body>
+
+	<div>
+		<h1>스토리 등록</h1>
+		<hr>
+		<br>
+	</div>
+
+	<div>
+		<div>
+			<div style="float:left; width: 50%;">
+				<div>
+					<div>
+						<select>
+							<option>히수집</option>
+							<option>경진이집</option>
+							<option>현진이집</option>
+							<option>기진이집</option>
+							<option>다윤이집</option>
+							<option>성민이집</option>
+						</select>
+					</div>
+				</div>
+				<img alt="표시 안돼지롱~" th:src="@{/img/map.JPG}" style="width: 600px;"/>
+			</div>
+
+			<div style="float: right; width: 50%;">
+				<form action="">
+					<div>
+						<label for="s_title">스토리 제목</label><br> 
+						<input id="s_title"type="text" placeholder="스토리 제목">
+					</div>
+
+					<div>
+						<label>등록할 문화재 목록</label><br>
+						<input type="text" placeholder="">
+						<button>초기화</button>
+					</div>
+
+					<div>
+						<label for="s_content">스토리 설명</label><br>
+						<textarea id="s_content" rows="5" placeholder="스토리에 대한 설명을 입력해주세요"></textarea>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+
+	<div style="clear:both;">
+		<hr>
+		<div>
+			<button>위치선택</button>
+			<button>저장</button>
+			<button>취소</button>
+		</div>
+	</div>
+
+</body>
+</html>

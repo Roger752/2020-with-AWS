@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.stempleRun.db.mapper.AmenityMapper">
+	
+	<insert id="insert">
+		insert into amenity values(amenity_seq.nextval, #{a_name}, #{a_latitude}, #{a_longitude})
+	</insert>
+	
+</mapper>

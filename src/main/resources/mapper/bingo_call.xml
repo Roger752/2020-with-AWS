@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.stempleRun.db.mapper.Bingo_CallMapper">
+
+	<!-- 목록 불러오기 -->
+	<select id="getbingoList" resultType="com.stempleRun.db.dto.BingoVO">
+		select b_num, b_title, b_content from bingo
+	</select>
+	
+</mapper>

@@ -1,0 +1,491 @@
+
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="include/headShare">
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+</head>
+
+<body>
+
+<!--헤더-->
+<header th:replace="include/header"></header>
+
+
+<div>
+    <h1>빙고 관리</h1>
+    <hr>
+    <br/>
+</div>
+       <div style="width:1200px; text-align:center">
+       <label>현재 빙고 : </label>
+       
+       <label th:if="${nowBingo != null}" id="bingotitle" name="bingotitle" th:text=${nowBingo.b_title}></label>
+       <label th:unless="${nowBingo != null}" id="bingotitle" name="bingotitle" th:text='없음'><input id="b_num" type="hidden" th:value=${nowBingo.b_num}></label>
+       <input th:if="${nowBingo != null}" id="b_num" type="hidden" th:value=${nowBingo.b_num}>
+       <input th:unless="${nowBingo != null}" id="b_num" type="hidden" th:value="없다">
+       </div>
+<!--소제목-->
+<div class="row">
+    <div class="col-sm-3">
+	    <h2>빙고 선택지도</h2><hr>
+	    <!-- 빙고 선택 지도 -->
+	       <div id="map" style="width: 450px; height: 500px; float: right;">
+	       </div>
+	       <div style="width:1200px; text-align:center">
+	       </div>      
+	</div>
+	
+	<!--영역 나누기 선-->
+	<div class="vl" style="border-left: 2px solid gray; height: 600px;">
+	</div>
+	 
+    
+	<div class="col-sm-2">
+	<h2>빙고 게임등록</h2><hr>
+		<!--빙고문제-->
+	 <form method="POST" id="form" action="/bingo/otherSave">
+	        <div>
+	            <div id="c_list">
+	            	<label for="reg_id">문화재 목록</label>
+	            	<button type="button" id="reset">초기화</button><hr>
+	                <div id="addList" name="addList">
+	                <ul th:each="bingocultureList:${bingocultureList}">
+                        <li th:text=${bingocultureList.c_name}></li>
+                        <input type="text" th:text=${bingocultureList.b_num}>
+                    </ul>
+                    
+	                </div>
+	            </div>
+	        </div>
+    </div>	
+    
+	        <div class="col-sm-3">
+	                <div><br><br><br>
+	                    <label for="content">게임목록</label><hr>
+	                    <div id="addHint" name="addHint"></div>
+                    </tr>
+	                </div>
+	        </div>
+	        <input type="button" value="전송" id="save2">
+  	</form>
+  	<a href="/" th:href="@{/bingo/bingocall}">불러오기</a></li>
+</div>
+
+
+<footer class="footer" th:replace="include/footer"></footer>
+
+</body>
+<!--Footer-->
+
+<script src="https://dapi.kakao.com/v2/maps/sdk.js?appkey=4f9c5b41cdef9519134cf34d948fca04&libraries=clusterer"></script>
+	<script src="https://code.jquery.com/jquery-3.4.1.js"></script>
+
+
+	<script th:inline="javascript">
+	
+		var data = [[${cultureList}]];
+		
+		console.log(data);
+		
+		
+		var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
+		mapOption = {
+			center : new kakao.maps.LatLng(35.896285, 128.622003), // 지도의 중심좌표
+			level : 10
+		// 지도의 확대 레벨
+		};
+	
+		var map = new kakao.maps.Map(mapContainer, mapOption); // 지도를 생성합니다
+
+		
+		// 마커 클러스터러를 생성합니다 
+	    var clusterer = new kakao.maps.MarkerClusterer({
+	        map: map, // 마커들을 클러스터로 관리하고 표시할 지도 객체 
+	        averageCenter: true, // 클러스터에 포함된 마커들의 평균 위치를 클러스터 마커 위치로 설정 
+	        minLevel: 10 // 클러스터 할 최소 지도 레벨 
+	    });
+		
+		
+		// 마커들을 클러스터러로 묶기위한 변수
+		var markers = [];
+		
+		
+		// 미리 저장되어있는 마커들을 불러오는 for문
+		for(var i=0; i < data.length; i++) {
+			// 지도를 클릭한 위치에 표출할 마커입니다
+			var marker = new kakao.maps.Marker({
+				// 마커를 생성합니다 
+				position: new kakao.maps.LatLng(data[i].c_latitude, data[i].c_longitude),
+				map: map
+			});
+			
+			
+			
+			// 마커를 클릭했을 때 마커 위에 표시할 인포윈도우를 생성합니다
+			var iwContent ='<div style="font-size:15px; text-align:center;">' + data[i].c_name + '</div>' + 
+							'<div style="width:150px; text-align:center; padding:5px;"><button id="test" onclick="c_update('+ "'" + data[i].c_name + "'" + ');" style="width:80px; height:20px; font-size:12px;">등록하기</button></div>', // 인포윈도우에 표출될 내용으로 HTML 문자열이나 document element가 가능합니다
+			    iwRemoveable = true; // removeable 속성을 ture 로 설정하면 인포윈도우를 닫을 수 있는 x버튼이 표시됩니다
+
+			// 인포윈도우를 생성합니다
+			var infowindow = new kakao.maps.InfoWindow({
+			    content : iwContent,
+			    removable : iwRemoveable
+			});
+
+			 
+			
+			// 마커 클러스터러에 마커들 담기
+			markers.push(marker);
+			
+			// 마커 클릭 시 인포윈도우 표시
+			kakao.maps.event.addListener(marker, 'click', clickListener(map, marker, infowindow));
+			
+		}
+		
+		// 클러스터러에 마커들을 추가합니다
+        clusterer.addMarkers(markers);
+       
+		
+		
+     // 마커에 클릭이벤트를 등록합니다
+		function clickListener(map, marker, infowindow) {
+    		return function() {
+    			// 마커 위에 인포윈도우를 표시합니다
+  		      infowindow.open(map, marker);
+    		};
+		}
+
+		var count = 1;	
+     
+		function c_update(name) {
+			
+			if(count>9){
+				alert("더 이상 등록할 수 없습니다.");
+				return; 
+			}
+			
+			alert("추가되었습니다.");
+			
+			
+			var total = document.getElementById('addList');
+			
+			
+			
+			// 추가할 Div 태그 생성
+			var addDiv = document.createElement('div');
+			
+			// 추가할 Div의 아이디 추가
+			addDiv.id = 'c_list_' + count;
+			
+			// div 추가
+			total.appendChild(addDiv);
+			
+			// 추가한 Div의 아이디
+			var nowNum = document.getElementById('c_list_' + count);
+			
+			
+			
+			
+			
+			// 몇번째 문화재인지 적어줄 label 추가
+			var addLabelNum = document.createElement('label');
+			
+			// 
+			addLabelNum.id = 'c_num' + count;
+			
+			addLabelNum.innerHTML = count + '번 문화재 : ' + '&nbsp';
+			
+			addDiv.appendChild(addLabelNum);
+			
+			
+			
+			
+			// 추가한 Div에 들어갈 label 추가
+			var addButton = document.createElement('button');
+			
+			// 추가할 label 아이디 추가
+			addButton.id = "c_Button" + count;
+			
+			// label에 name 추가
+			addButton.setAttribute('name', 'c_' + count);
+			
+			addButton.setAttribute('type', 'button');
+			
+			// label에 문화재 이름 추가
+			addButton.innerHTML = name;
+			
+			// label 추가
+			nowNum.appendChild(addButton);
+			
+			var hidden = document.createElement('input');
+			
+			hidden.id = "culturalId" + count;
+			
+			addDiv.appendChild(hidden);
+			
+			
+			
+			
+			var hiddenName = document.getElementById('culturalId' + count);
+			
+			hiddenName.setAttribute('name', 'cultural' + count);
+			hiddenName.setAttribute('type', 'hidden');
+			hiddenName.setAttribute('value', name);
+			
+			
+			
+			 if(count == 1) {
+				var c_count = document.createElement('input');
+				
+				c_count.id = "c_count";
+				
+				addDiv.appendChild(c_count);
+				
+				var hiddenCount = document.getElementById('c_count');
+				
+				hiddenCount.setAttribute('name', 'count');
+				hiddenCount.setAttribute('type', 'hidden');
+				hiddenCount.setAttribute('value', count);
+			}
+			else {
+				var hiddenCount = document.getElementById('c_count');
+				
+				hiddenCount.setAttribute('value', count);
+			}
+			
+			 /* ============================================================ */
+			 					/* 문제 추가 */
+			 					
+// 			 var get_q_divId = document.getElementById('addQuestion');
+			 
+// 			 // 문제당 div 추가
+// 			 var add_q_div = document.createElement('div');
+// 			 // 문제당 div에 ID추가
+// 			 add_q_div.id = 'q_list' + count;
+// 			 // html div에 새로만든 div 추가
+// 			 get_q_divId.appendChild(add_q_div);
+			 
+			 
+			 
+// 			 // 새로 추가한 div의 아이디 가져오기
+// 			 var new_q_divId = document.getElementById('q_list' + count);
+			 
+			
+// 			 // 몇번째 문제인지 label 추가
+// 			 var add_q_label = document.createElement('label');
+			 
+// 			 add_q_label.id = 'q_num' + count;
+			 
+// 			 add_q_label.innerHTML = count + '번 문제 : ' + '&nbsp';
+			 
+// 			 new_q_divId.appendChild(add_q_label);
+			 
+	 		 
+// 			// 			 새로 추가할 input 추가
+			 
+// 			 var add_q_input = document.createElement('input');
+			 
+// 			 add_q_input.id = 'q_input' + count;
+			 
+// 			 add_q_input.setAttribute('type', 'text');
+			 
+// 			 add_q_input.setAttribute('placeholder', '문제를 입력해주세요');
+			 
+// 			 var add_q_inputId = document.getElementById('q_input' + count);
+			 
+			 
+// 			 new_q_divId.appendChild(add_q_input);
+			 
+			 
+// 			 /* ============================================================ */
+// 									/* 힌트 추가 */	 
+			 
+// 			var get_h_divId = document.getElementById('addHint');
+			 
+			 
+// 			var new_h_form = document.createElement('form');
+			
+			
+// 			new_h_form.id = 'form' + count;
+			
+// 			new_h_form.setAttribute('method', 'POST');
+			
+// 			new_h_form.setAttribute('enctype', 'multipart/form-data');
+			
+// 			new_h_form.setAttribute('action', '/storymake/manage_fileSave');
+			
+// 			get_h_divId.appendChild(new_h_form);
+			 
+			 
+			 
+			 
+			 
+// 			 // 힌트당 div 추가
+// 			 var add_h_div = document.createElement('div');
+// 			 // 힌트당 div에 ID추가
+// 			 add_h_div.id = 'h_list' + count;
+// 			 // html div에 새로만든 div 추가
+// 			 new_h_form.appendChild(add_h_div);
+			
+			 
+			 
+			 
+// 			 // 버튼당 div Id 가져오기
+// 			 var new_h_divId = document.getElementById('h_list' + count);
+			 
+			 
+// 			 var add_h_label = document.createElement('label');
+			 
+// 			 add_h_label.id = "h_num" + count;
+			 
+// 			 add_h_label.innerHTML = count + ". ";
+			 
+// 			 new_h_divId.appendChild(add_h_label);
+			 
+			 
+// 			 // text용 button 추가
+// 			 var add_h_t_button = document.createElement('button');
+			 
+// 			 add_h_t_button.id = "textButton" + count;
+			 
+// 			 add_h_t_button.setAttribute('type', 'button');
+			 
+// 			 add_h_t_button.setAttribute('value', count);
+			 
+// 			 add_h_t_button.setAttribute('name', 'textButton');
+			 
+// 			 add_h_t_button.innerHTML = "텍스트";
+			 
+// 			 new_h_divId.appendChild(add_h_t_button);
+			 
+			 
+// 			 // 파일첨부 버튼 추가
+// 			 var add_h_file = document.createElement('input');
+			 
+// 			 add_h_file.id = "fileButton" + count;
+			 
+// 			 add_h_file.setAttribute('type', 'file');
+			 
+// 			 add_h_file.setAttribute('value', count);
+			 
+// 			 add_h_file.setAttribute('name', 'file');
+			 
+// 			 add_h_file.setAttribute('style', 'font-size:13px;')
+			 
+// 			 new_h_divId.appendChild(add_h_file);
+			 
+			 
+			 
+				
+// 			var add_h_button = document.createElement('button');
+				
+// 			add_h_button.id = 'submitButton' + count;
+				
+// 			add_h_button.setAttribute('type', 'button');
+				
+// 			add_h_button.setAttribute('value', count);
+									
+// 			add_h_button.innerHTML = "저장";
+				
+// 			new_h_divId.appendChild(add_h_button);
+			 
+			 
+			 
+			 /* ============================================================ */
+								/* 저장버튼 추가 */	 
+			 
+								
+			/* var get_s_divId = document.getElementById('addSubmit');
+			
+			
+			
+			var new_s_form = document.createElement('form');
+			
+			
+			new_s_form.id = 'form' + count;
+			
+			new_s_form.setAttribute('method', 'POST');
+			
+			new_s_form.setAttribute('enctype', 'multipart/form-data');
+			
+			new_s_form.setAttribute('action', '/storymake/manage_save');
+			
+			get_s_divId.appendChild(new_s_form);
+			
+			
+			var new_s_div = document.createElement('div');
+			
+			new_s_div.id = 's_list' + count;
+			
+			new_s_form.appendChild(new_s_div);
+								
+								
+			var new_s_divId = document.getElementById('s_list'+ count);
+			
+			var add_s_button = document.createElement('button');
+			
+			add_s_button.id = 'submitButton' + count;
+			
+			add_s_button.setAttribute('type', 'button');
+			
+			add_s_button.setAttribute('value', count);
+								
+			add_s_button.innerHTML = "저장";
+			
+			new_s_divId.appendChild(add_s_button); */
+								
+			 count = count + 1;
+		}
+		
+		$(document).ready(function() {
+			$("#reset").on("click", function() {
+				var list = $("#addList").html();
+				
+				list.empty;
+				location.reload(true);
+
+			});
+			
+			
+			// if=텍스트힌트를 선택 => else=저장을 클릭시 ajax요청
+			$("#save2").on('click', function(e) {
+				
+				
+				var count = $('#c_count').val();
+				var a = new Array();
+				for(var i=0; i<count; i++){
+					var b = $('#culturalId'+(i+1));
+					console.log(b.val());
+					a.push(b.val());
+				}
+				
+				var BingoNum = document.getElementById('b_num');
+				var data = {
+						list : a,
+						b_num : BingoNum.value
+				}
+				console.log(data);
+				
+				$.ajax({
+					url: "/bingo/otherSave",
+					type: "POST",
+					data: data,
+					success: function(data) {
+						alert("성공");
+						console.log("1111111111");
+					},
+					error: function(jqXHR, textStatus, errorThrown) {
+						alert(jqXHR.responseText);
+						console.log("22222222222222");
+					}
+				});
+			});
+			
+			
+		});
+		
+			
+	</script>
+</html>

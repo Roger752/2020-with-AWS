@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>컨텐츠관리[스토리수정]</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+    <style>
+        #footer{
+            position: absolute;
+            bottom: 0;
+            background: black;
+            left:0px;
+            bottom:0px;
+            height:60px;
+            width:100%;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+<!--nav바 시작-->
+<nav class="navbar navbar-expand-sm bg-dark navbar-dark">
+    <!-- Brand/logo -->
+    <a class="navbar-brand" href="#">
+        <img src="css/logo2.png" alt="logo" style="width:35px;">
+    </a>
+    <div class="row">
+        <ul class="nav nav-item">
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#">문화재 길잡이</a>
+                <div class="dropdown-menu">
+                    <a class="dropdown-item" href="#">스토리 길잡이</a>
+                    <a class="dropdown-item" href="#">스토리 등록</a>
+                    <a class="dropdown-item" href="#">스토리 관리</a>
+                    <a class="dropdown-item" href="#">빙고 길잡이</a>
+                    <a class="dropdown-item" href="#">빙고 등록</a>
+                    <a class="dropdown-item" href="#">빙고 관리</a>
+                </div>
+            </li>
+        </ul>
+        <ul class="nav nav-item">
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#">컬처 클라우드</a>
+                <div class="dropdown-menu">
+                    <a class="dropdown-item" href="#">핫스팟</a>
+                    <a class="dropdown-item" href="#">사진마당</a>
+                    <a class="dropdown-item" href="#">포토클라우드</a>
+                </div>
+            </li>
+        </ul>
+        <ul class="nav nav-item">
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#">컨텐츠 관리</a>
+                <div class="dropdown-menu">
+                    <a class="dropdown-item" href="#">스토리 관리</a>
+                    <a class="dropdown-item" href="#">빙고 관리</a>
+                    <a class="dropdown-item" href="#">게임 관리</a>
+                    <a class="dropdown-item" href="#">포토 관리</a>
+                </div>
+            </li>
+        </ul>
+        <ul class="nav nav-item">
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#">리뷰,아이디어 게시판</a>
+                <div class="dropdown-menu">
+                    <a class="dropdown-item" href="#">리뷰 게시판</a>
+                    <a class="dropdown-item" href="#">스토리 리뷰</a>
+                    <a class="dropdown-item" href="#">빙고 리뷰</a>
+                    <a class="dropdown-item" href="#">아이디어 게시판</a>
+                    <a class="dropdown-item" href="#">스토리 아이디어</a>
+                    <a class="dropdown-item" href="#">빙고 아이디어</a>
+                </div>
+            </li>
+        </ul>
+    </div>
+    <div class="navbar-collapse w-500 ">
+        <ul class="navbar-nav ml-auto">
+            <li class="nav-item">
+                <a class="nav-link" href="#">송경진</a>
+            </li>
+        </ul>
+    </div>
+    <div class="text-warning">님 반갑습니다.</div>
+</nav>
+
+<div class="container">
+    <article>
+        <div class="container" role="main">
+            <h1>스토리 상세</h1><hr>
+            <form name="form" id="form" >
+                <div class="mb-3">
+                    <label for="title">제목</label>
+                    <p>대구·경북 여성 독립운동가 임봉선 지사</p>
+                </div>
+                <div class="mb-3">
+                    <label for="reg_id">위치안내</label>
+                    <div>
+                        <img src="css/bingo.png" alt="logo" style="width:300px;">
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <label for="content">내용</label>
+                    <p>대구·경북 여성 독립운동가 임봉선 지사를 참고한~~</p>
+                </div>
+                <div class="mb-3">
+                    <label for="content">작성일자</label>
+                    <p>2020.05.23</p>
+                </div>
+                <div class="mb-3">
+                    <label class="btn btn-primary btn-file">
+                        파일첨부 <input type="file" style="display: none;">
+                    </label>
+                </div>
+            </form>
+            <div>
+                <button type="button" class="btn btn btn-dark float-right " id="btnSave">목록</button>
+                <button type="button" class="btn btn btn-dark float-right mr-1" id="btnSave">수정</button>
+            </div>
+        </div>
+    </article>
+</div>
+</body>
+<!--Footer-->
+<div id="footer">
+    <p class="text-white">문화재청 ｜ 이용안내 ｜ 개인정보처리방침 ｜ 저작권정책사이트  ｜ 오류신고</p>
+</div>
+</html>

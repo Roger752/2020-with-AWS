@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.stempleRun.db.mapper.ReviewCommentMapper">
+<select id="commentCount" resultType="int">
+        SELECT
+            COUNT(*)
+        FROM REVIEWCOMMENT
+    </select>
+    
+    <select id="commentList" resultType="com.stempleRun.db.dto.CommentVO">
+        SELECT
+            *
+        FROM REVIEWCOMMENT
+        where
+        bno = #{bno}
+    </select>
+    
+    
+    <insert id="commentInsert" parameterType="com.stempleRun.db.dto.CommentVO">
+        INSERT INTO
+        reviewcomment (CNO, BNO, CONTENT, WRITER, REG_DATE)
+        VALUES(reviewcomment_seq.nextval,#{bno},#{content},#{writer},sysdate) 
+    </insert>
+    
+    <update id="commentUpdate" parameterType="com.stempleRun.db.dto.CommentVO">
+        UPDATE REVIEWCOMMENT
+            SET
+            CONTENT = #{content}
+        WHERE CNO = #{cno}
+    </update>
+    
+    <delete id="commentDelete" parameterType="int">
+        DELETE FROM REVIEWCOMMENT WHERE CNO = #{cno}
+    </delete>
+</mapper>

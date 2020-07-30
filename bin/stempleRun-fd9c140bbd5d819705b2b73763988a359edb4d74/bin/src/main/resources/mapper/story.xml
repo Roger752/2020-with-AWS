@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.stempleRun.db.mapper.StoryMapper">
+
+	<insert id="insert">
+		insert into story values (story_seq.nextval, #{s_title}, #{s_content}, #{area_num})
+	</insert>
+	
+	<select id="findNum" resultType="com.stempleRun.db.dto.Story">
+		select * from story where s_title = #{s_title}
+	</select>
+
+</mapper>

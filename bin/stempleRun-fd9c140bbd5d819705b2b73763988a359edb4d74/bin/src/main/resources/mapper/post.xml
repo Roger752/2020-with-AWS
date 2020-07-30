@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.stempleRun.db.mapper.PostMapper">
+
+	<select id="getList" resultType="com.stempleRun.db.dto.PostVO">
+		select * from post
+	</select>
+
+	<select id="getDayRank"  resultType="com.stempleRun.db.dto.PostVO">
+		<![CDATA[ select * from(select * from post where substr(p_day,1,8)=to_char(sysdate) order by p_recommend desc) where rownum <=3 ]]>
+	</select>
+
+	<select id="getWeekRank" resultType="com.stempleRun.db.dto.PostVO">
+		<![CDATA[ select * from(select * from post where p_day between sysdate - to_char(sysdate,'d')+1 and sysdate-to_char(sysdate,'d')+8 order by p_recommend desc) where rownum <=3]]>
+	</select>
+
+	<select id="getMonthRank" resultType="com.stempleRun.db.dto.PostVO">
+		<![CDATA[select * from(select * from post where substr(p_day,4,2)=to_char(sysdate,'mm') order by p_recommend desc) where rownum <=3]]>
+	</select>
+	
+	<insert id="postInsert" parameterType="com.stempleRun.db.dto.PostVO">
+ 		insert into post 
+ 		VALUES (ex.nextval, #{p_title}, #{p_content}, #{p_day}, 0, #{p_file}, 1, 1, 1)
+    </insert>
+    
+    <select id="postDetail" parameterType="int" resultType="com.stempleRun.db.dto.PostVO">
+        SELECT * FROM post WHERE p_num = #{p_num}
+    </select>
+	
+<!-- 	<select id="listPage" resultType="com.stempleRun.db.dto.PostVO" parameterType="com.stempleRun.db.dto.Criteria">
+	select * from (select rownum as rnum, post.* from post order by p_day desc) where rnum between #{rowStart} and #{rowEnd}
+	</select>
+
+	<select id="listCount" resultType="int">
+	<![CDATA[ select count(p_num) from post where p_num > 0 ]]>
+	</select> -->
+	
+	<delete id = "postDelete" parameterType="Integer">
+		delete from post where p_num = #{p_num}
+	</delete>
+	
+	<update id = "postUpdate">
+		<!-- update post set p_title = #{p_title}, p_content = #{p_content} where p_num=#{p_num} -->
+		update post set <if test="p_title != null">p_title=#{p_title}</if>
+		<if test= "p_title != null and p_content != null">, p_content = #{p_content}</if>
+		where p_num = #{p_num}
+	</update>
+</mapper>

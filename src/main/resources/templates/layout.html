@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="utf-8" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security" xmlns="http://www.w3.org/1999/xhtml"
+	th:fragment="layout(title, link, content)">
+    <head>
+        <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>STEMPLERUN</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="robots" content="all,follow">
+    <!-- Bootstrap CSS-->
+    <link rel="stylesheet" href="js/bootstrap/css/bootstrap.min.css"> 
+    <!-- Google fonts-->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins:300,400,700&amp;display=swap">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Playfair+Display:500i&amp;display=swap">
+    <!-- Owl Carousel-->
+    <link rel="stylesheet" href="js/owl.carousel2/assets/owl.carousel.min.css">
+    <link rel="stylesheet" href="js/owl.carousel2/assets/owl.theme.default.min.css">
+    <!-- theme stylesheet-->
+    <link rel="stylesheet" href="/css/mainpage/style.default.css" id="theme-stylesheet">
+    <!-- Custom stylesheet - for your changes-->
+    <link rel="stylesheet" href="/css/mainpage/custom.css">
+    <!-- Favicon-->
+    <link rel="shortcut icon" href="/img/mainphoto/steplerunlogo.png">
+	</head>
+    <body>
+    <!-- navbar-->
+    <header class="header">
+      <nav class="navbar navbar-expand-lg navbar-dark position-absolute w-100">
+        <div class="container"><a class="navbar-brand d-block d-lg-none" href="#"><img src="/img/mainphoto/steplerunlogo.png" alt="..." width="60"></a>
+          <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span></span><span></span><span></span></button>
+          <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav ml-auto">
+              <li class="nav-item"><a class="nav-link" href="/" th:href="@{/storymake/reg}">스토리길잡이</a></li>
+              <li class="nav-item"><a class="nav-link" href="/" th:href="@{/bingo/bingocall}">빙고길잡이</a></li>
+              <li class="nav-item"><a class="nav-link" href="/" th:href="@{/review/}">게시판</a></li>
+            </ul>
+            <ul class="navbar-nav d-none d-lg-block px-4">
+              <li class="nav-item m-0"><a class="navbar-brand m-0" th:href="@{/}"><img src="/img/mainphoto/stemplerunlogo.png" alt="..." width="140"></a></li>
+            </ul>
+            <ul class="navbar-nav mr-auto">
+              <li class="nav-item"><a class="nav-link" href="/" th:href="@{/photoscloud/list}">포토클라우드</a></li>
+              <li class="nav-item"><a class="nav-link" href="/" th:href="@{/gallery/list}">사진마당</a></li>
+              <li class="nav-item"><a class="nav-link" href="/" th:href="@{/gallery/testpage/day}">핫스팟</a></li>
+              <li class="nav-item" th:if="${#authorization.expr('isAuthenticated()')}">
+				<form action="/logout" method="post">
+				<input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"> 
+				<input class="nav-link btn btn-default" style="color: #ac887e; font-weight: bold;" type="submit" value="로그아웃">
+				</form>
+			  </li>
+			  <li class="nav-item" th:unless="${#authorization.expr('isAuthenticated()')}">
+			  <a class="nav-link js-scroll-trigger" style="color: #ac887e; font-weight: bold;" th:href="@{/login}">로그인</a></li>
+            </ul>
+          </div>
+        </div>
+      </nav>
+    </header>
+    <!-- Hero Slider -->
+    <section class="text-center pt-5 pt-lg-0 hero-home" id="hero">
+      <div class="owl-carousel owl-theme hero-slider owl-nav-custom">
+        <div class="hero-slide bg-cover py-5 with-border-image d-flex align-items-center" style="background: url(/img/mainphoto/mainpagephoto1.jpg)">
+          <div class="container text-white py-5 my-5 index-forward">
+            <h1 class="text-uppercase text-xl">스토리길잡이</h1>
+            <div class="row">
+              <div class="col-lg-7 mx-auto">
+                <p class="lead">다양한 스토리미션을 깨며 웅앵</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="hero-slide bg-cover py-5 with-border-image d-flex align-items-center" style="background: url(/img/mainphoto/mainpagephoto2.jpg)">
+          <div class="container text-white py-5 my-5 index-forward">
+            <h1 class="text-uppercase text-xl">빙고길잡이</h1>
+            <div class="row">
+              <div class="col-lg-7 mx-auto">
+                <p class="lead">Visit your local church and become a part of the flock by contributing to the community in any way you possibly can.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="hero-slide bg-cover py-5 with-border-image d-flex align-items-center" style="background: url(/img/mainphoto/mainpagephoto3.jpg); object-fit: fill;">
+          <div class="container text-white py-5 my-5 index-forward">
+            <h1 class="text-uppercase text-xl">포토클라우드</h1>
+            <div class="row">
+              <div class="col-lg-7 mx-auto">
+                <p class="lead">Visit your local church and become a part of the flock by contributing to the community in any way you possibly can.</p><a class="btn btn-primary px-4" href="text.html">Read More</a>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="hero-slide bg-cover py-5 with-border-image d-flex align-items-center" style="background: url(/img/mainphoto/mainpagephoto4.jpg)">
+          <div class="container text-white py-5 my-5 index-forward">
+            <h1 class="text-uppercase text-xl">사진마당</h1>
+            <div class="row">
+              <div class="col-lg-7 mx-auto">
+                <p class="lead">Visit your local church and become a part of the flock by contributing to the community in any way you possibly can.</p><a class="btn btn-primary px-4" href="text.html">Read More</a>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="hero-slide bg-cover py-5 with-border-image d-flex align-items-center" style="background: url(img/hero-bg-3.jpg)">
+          <div class="container text-white py-5 my-5 index-forward">
+            <h1 class="text-uppercase text-xl">핫스팟</h1>
+            <div class="row">
+              <div class="col-lg-7 mx-auto">
+                <p class="lead">Visit your local church and become a part of the flock by contributing to the community in any way you possibly can.</p><a class="btn btn-primary px-4" href="text.html">Read More</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!-- Features Section-->
+    <section id="features">
+      <div class="container-fluid p-0">
+        <div class="row p-0 text-center align-items-stretch">
+          <div class="col-lg-3 col-md-6 p-0">
+            <div class="p-5 bg-primary text-white h-100">
+              <h3 class="h4">Audio & Game Activity</h3>
+              <p class="mb-0 text-small">지겹고 따분한 설명은 그만! <br> 귀에 쏙쏙박히는 오디오 서비스와 게임을 함께!</p>
+            </div>
+          </div>
+          <div class="col-lg-3 col-md-6 p-0">
+            <div class="p-5 bg-primary-shade text-white h-100">
+              <h3 class="h4">Photo & Memory</h3>
+              <p class="mb-0 text-small">사진으로 기억을 담자!</p>
+            </div>
+          </div>
+          <div class="col-lg-3 col-md-6 p-0 order-md-4 order-lg-3">
+            <div class="p-5 bg-primary text-white h-100">
+              <h3 class="h4">Tourism</h3>
+              <p class="mb-0 text-small">일상에 지친 자, 우리의 역사 속으로 떠나라! <br> 관광하며 웅앵!</p>
+            </div>
+          </div>
+          <div class="col-lg-3 col-md-6 p-0 order-md-3 order-lg-4">
+            <div class="p-5 bg-primary-shade text-white h-100">
+              <h3 class="h4">Come up with an idea</h3>
+              <p class="mb-0 text-small">나만의 역사 이야기를 만들어보자!</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!-- Services Section -->
+    <section class="py-5" id="services">
+      <div class="container py-5">
+        <header class="mb-4 text-center mb-5">
+          <p class="text-serif mb-0 text-primary">Watch our services online</p>
+          <h2 class="text-uppercase">Our services        </h2>
+        </header>
+        <div class="row text-center">
+          <div class="col-lg-4 mb-4 mb-lg-0">
+          	<img src="/img/mainphoto/story_icon.png" class="rounded-circle" alt="Cinque Terre" width="254" height="236"><hr>
+            <h3 class="h5">스토리길잡이</h3>
+            <p class="text-muted">Lorem ipsum dolor sit amet, consectetur elit sed do eiusmod tempor incididunt labore.</p>
+          </div>
+          <div class="col-lg-4 mb-4 mb-lg-0">
+			<img src="/img/mainphoto/bingo_icon.png" class="rounded-circle" alt="Cinque Terre" width="254" height="236"><hr>
+            <h3 class="h5">빙고길잡이</h3>
+            <p class="text-muted">Lorem ipsum dolor sit amet, consectetur elit sed do eiusmod tempor incididunt labore.</p>
+          </div>
+          <div class="col-lg-4">
+			<img src="/img/mainphoto/board_icon.png" class="rounded-circle" alt="Cinque Terre" width="254" height="236"><hr>
+            <h3 class="h5">아이디어 및 리뷰게시판</h3>
+            <p class="text-muted">Lorem ipsum dolor sit amet, consectetur elit sed do eiusmod tempor incididunt labore.</p>
+          </div>
+        </div><br><br><br><br>
+        <div class="row text-center">
+          <div class="col-lg-4 mb-4 mb-lg-0">
+			<img src="/img/mainphoto/cloud_icon.png" class="rounded-circle" alt="Cinque Terre" width="254" height="236"><hr>
+            <h3 class="h5">포토클라우드</h3>
+            <p class="text-muted">Lorem ipsum dolor sit amet, consectetur elit sed do eiusmod tempor incididunt labore.</p>
+          </div>
+          <div class="col-lg-4 mb-4 mb-lg-0">
+			<img src="/img/mainphoto/photo_icon.png" class="rounded-circle" alt="Cinque Terre" width="254" height="236"><hr>
+            <h3 class="h5">사진마당</h3>
+            <p class="text-muted">Lorem ipsum dolor sit amet, consectetur elit sed do eiusmod tempor incididunt labore.</p>
+          </div>
+          <div class="col-lg-4">
+			<img src="/img/mainphoto/hotspot_icon.png" class="rounded-circle" alt="Cinque Terre" width="254" height="236"><hr>
+            <h3 class="h5">핫스팟</h3>
+            <p class="text-muted">Lorem ipsum dolor sit amet, consectetur elit sed do eiusmod tempor incididunt labore.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!-- Works Section-->
+    <section id="works">
+      <div class="container-fluid px-0">
+        <div class="row align-items-stretch">
+          <div class="col-lg-6 half-page-banner bg-cover" style="background: url(img/priest.jpg)"></div>
+          <div class="col-lg-6 bg-light py-lg-5">
+            <div class="h-100 d-flex flex-column p-5 justify-content-center">
+              <p class="text-serif text-primary mb-0">Where to find us</p>
+              <h2 class="text-uppercase">Our work</h2>
+              <p class="text-muted">Lorem ipsum dolor sit amet, consectetur elit sed do eiusmod tempor incididunt labore.</p>
+              <ul class="list-check pl-0">
+                <li>
+                  <p class="mb-0 text-muted mb-2">Eu vim atqui ludus petentium, suas idque est id.</p>
+                </li>
+                <li>
+                  <p class="mb-0 text-muted mb-2">Ne veniam oblique propriae vim, dicant.</p>
+                </li>
+                <li>
+                  <p class="mb-0 text-muted mb-2">Sed everti utroque, vis ea oblique pertinax con.</p>
+                </li>
+              </ul><img class="mb-3" src="img/signature.png" alt="..." width="90">
+              <h6 class="text-uppercase mb-0">Richard Wood</h6>
+              <p class="text-serif text-primary text-small mb-0">Lead Pastor</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!-- Sermons Section -->
+    <section class="py-5" id="sermons">
+      <div class="container py-5">
+        <header class="mb-4 text-center mb-5">
+          <p class="text-serif mb-0 text-primary">Watch our services mean</p>
+          <h2 class="text-uppercase">Studying interesting history</h2>
+        </header>
+      </div>
+    </section>
+    <!-- Become a Volunteer Section -->
+    <section class="bg-cover bg-fixed shadow-inner" id="volunteer" style="background: url(/img/mainphoto/mainpagephoto4.jpg)">
+      <div class="primary-overlay py-5">
+        <div class="overlay-content index-forward py-5">
+          <div class="container py-5 text-white text-center">
+            <p class="lead text-serif mb-1">Start your precious timee</p>
+            <h2 class="text-xl text-shadow mb-4">Start your precious time</h2><a class="btn btn-primary px-4" href="text.html">Sign Up</a>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!-- Scroll Top Button--><a class="scroll-top" href="#"><i class="fas fa-long-arrow-alt-up"></i></a>
+    <footer class="pt-5 text-white" style="background: #111">
+      <div class="container pt-5">
+        <div class="row mb-5 pb-5">
+          <div class="col-md-4 col-sm-12">
+            <h5 class="mb-4 mt-3">이용약관</h5>
+            <p class="text-small text-muted">스템플런 서비스 및 제품(이하 ‘서비스’)을 이용해 주셔서 감사합니다. 본 약관은 다양한 스템플런 서비스의 이용과 관련하여 스템플런 서비스를 제공하는 스템플런 주식회사(이하 ‘스템플런’)와 이를 이용하는 스템플런 서비스 회원(이하 ‘회원’) 또는 비회원과의 관계를 설명하며, 아울러 여러분의 스템플런 서비스 이용에 도움이 될 수 있는 유익한 정보를 포함하고 있습니다.</p>
+          </div>
+          <div class="col-md-4 col-sm-12">
+            <h5 class="mb-4 mt-3">고객지원</h5>
+            <ul class="list-unstyled">
+              <li class="mb-2">
+                <h6 class="mb-1"> <a class="reset-anchor text-primary" href="#">연락처</a></h6>
+                <p class="text-muted text-small text-fancy mb-0">053 - 456 - 4578</p>
+              </li>
+              <li class="mb-2">
+                <h6 class="mb-1"> <a class="reset-anchor text-primary" href="#">팩스</a></h6>
+                <p class="text-muted text-small text-fancy mb-0">000 - 0000 - 1111</p>
+              </li>
+            </ul>
+          </div>
+          <div class="col-md-4 col-sm-12">
+            <h5 class="mb-4 mt-3">비즈니스 · 광고 문의</h5>
+           
+            <div class="input-group">
+              <input class="form-control border-dark text-white rounded-0" type="search" placeholder="Enter your email address" aria-label="email address" aria-describedby="button-addon2">
+              <div class="input-group-append">
+                <button class="btn btn-primary px-4" id="button-addon2" type="submit"><i class="fas fa-paper-plane"></i></button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="py-4 border-top border-dark text-center">
+          <p class="mb-0 text-muted">Copyright 2016. <a class="reset-anchor text-primary" href="https://bootstraptemple.com/p/church">STEMPLERUN</a> All Rights Reserved. </p>
+          <!-- If you want to remove the backlink, please purchase the Attribution-Free License. See details in readme.txt or license.txt. Thanks!-->
+        </div>
+      </div>
+    </footer>
+    <!-- JavaScript files-->
+    <script src="js/jquery/jquery.min.js"></script>
+    <script src="js/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="js/owl.carousel2/owl.carousel.min.js"></script>
+    <script src="js/jquery-circle-progress/circle-progress.min.js"></script>
+    <script src="js/smooth-scroll/smooth-scroll.min.js"></script>
+    <script src="js/jquery.countdown/jquery.countdown.js"></script>
+    <script src="js/front.js"></script>
+    <!-- FontAwesome CSS - loading as last, so it doesn't block rendering-->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.1/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+  </body>
+</html>

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.stempleRun.db.mapper.AmenityMapper">
+
+
+	<insert id="amenityinsert">
+		insert into amenity values(amenity_seq.nextval,
+		#{a_name}, #{a_latitude}, #{a_longitude})
+	</insert>
+	
+	<select id="getAmenitys"
+		resultType="com.stempleRun.db.dto.Amenity">
+		select * from amenity
+	</select>
+
+	<select id="getAmenity"
+		resultType="com.stempleRun.db.dto.Amenity">
+		select * from Amenity where a_num = #{a_num}
+	</select>
+
+	<select id="findNum" resultType="com.stempleRun.db.dto.Amenity">
+		select * from Amenity where a_latitude = #{a_latitude} and a_longitude = #{a_longitude} 
+	</select>
+</mapper>

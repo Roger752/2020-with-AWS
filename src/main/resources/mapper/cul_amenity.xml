@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.stempleRun.db.mapper.Cul_AmenityMapper">
+
+<select id="insert" resultType="com.stempleRun.db.dto.Cul_amenity">
+		insert into cul_amenity values (#{c_num}, #{a_num})
+</select>
+	<select id="findNum" resultType="com.stempleRun.db.dto.Cul_amenity">
+		select * from Cul_amenity where c_num = #{c_num}
+	</select>
+</mapper>

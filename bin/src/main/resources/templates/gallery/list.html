@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="ko" xalns:th="http://www.thymeleaf.org">
+<meta charset="UTF-8">
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+<header th:replace="include/header"></header>
+<title>Insert title here</title>
+</head>
+
+
+
+<body>
+<br><br><br>
+	<div class="container">
+		<h1>사진마당</h1>
+		<div class="photos">
+				<!-- 인기순 최신순 정리때문에 클래스 필요 -->
+				<a class="btn btn-primary" id="popular">인기순</a>&nbsp;&nbsp; <a
+					class="btn btn-primary" id="lately">최신순</a><br><br><br>
+		</div>
+		<div class="row">
+			<div th:each="post:${list}" id="detail" class="detail col-md-4">
+				<!-- detail 이동위해서 클래스 필요 -->
+				 <a th:id="${post.p_num}"><img th:src=${post.pic_file} width=200, height=200></a> 
+				 <a th:id="${post.p_num}">
+					<p th:text=${post.p_title}></p>
+				</a>
+				<p th:text=${post.m_name}></p>
+				<p th:text="${#dates.format(post.p_day, 'yyyy년 MM월 dd일')}"></p>
+				추천수 <span th:text=${post.p_recommend}></span>
+				</li>
+				<hr>
+			</div>
+		</div>
+	</div>
+	<!--Footer-->
+<div class="push" style="height:260px;"></div>
+<footer class="footer"  th:replace="include/footer"></footer>
+</body>
+<script>
+$('#detail a').click(function(){
+	   $(location).attr('href','http://localhost:4007/gallery/detail/' + this.id);
+	   });
+$('.photos a').click(function() {
+	$(location).attr('href', 'http://localhost:4007/gallery/list/' + this.id);
+})
+
+
+</script>
+</html>

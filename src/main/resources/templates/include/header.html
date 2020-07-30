@@ -1,0 +1,60 @@
+<meta charset="UTF-8">
+<html>
+<!DOCTYPE html>
+<html lang="utf-8" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security" xmlns="http://www.w3.org/1999/xhtml"
+	th:fragment="layout(title, link, content)">
+    <head>
+        <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>STEMPLERUN</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="robots" content="all,follow">
+    <!-- Bootstrap CSS-->
+    <link rel="stylesheet" href="/js/bootstrap/css/bootstrap.min.css"> 
+    <!-- Google fonts-->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins:300,400,700&amp;display=swap">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Playfair+Display:500i&amp;display=swap">
+    <!-- Owl Carousel-->
+    <link rel="stylesheet" href="/js/owl.carousel2/assets/owl.carousel.min.css">
+    <link rel="stylesheet" href="/js/owl.carousel2/assets/owl.theme.default.min.css">
+    <!-- theme stylesheet-->
+    <link rel="stylesheet" href="/css/mainpage/style.default.css" id="theme-stylesheet">
+    <!-- Custom stylesheet - for your changes-->
+    <link rel="stylesheet" href="/css/mainpage/custom.css">
+    <!-- Favicon-->
+    <link rel="shortcut icon" href="/img/mainphoto/steplerunlogo.png">
+	</head>
+    <!-- navbar-->
+    <header class="header">
+      <nav class="navbar navbar-expand-lg navbar-dark position-absolute w-100">
+        <div class="container"><a class="navbar-brand d-block d-lg-none" href="#"><img src="/img/mainphoto/steplerunlogo.png" alt="..." width="60"></a>
+          <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span></span><span></span><span></span></button>
+          <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav ml-auto">
+              <li class="nav-item"><a class="nav-link" href="/" th:href="@{/storymake/reg}">스토리길잡이</a></li>
+              <li class="nav-item"><a class="nav-link" href="/" th:href="@{/bingo/bingocall}">빙고길잡이</a></li>
+              <li class="nav-item"><a class="nav-link" href="/" th:href="@{/review/}">게시판</a></li>
+            </ul>
+            <ul class="navbar-nav d-none d-lg-block px-4">
+              <li class="nav-item m-0"><a class="navbar-brand m-0" th:href="@{/}"><img src="/img/mainphoto/stemplerunlogo.png" alt="..." width="140"></a></li>
+            </ul>
+            <ul class="navbar-nav mr-auto">
+              <li class="nav-item"><a class="nav-link" href="/" th:href="@{/photoscloud/list}">포토클라우드</a></li>
+              <li class="nav-item"><a class="nav-link" href="/" th:href="@{/gallery/list}">사진마당</a></li>
+              <li class="nav-item"><a class="nav-link" href="/" th:href="@{/gallery/testpage/day}">핫스팟</a></li>
+              <li class="nav-item" th:if="${#authorization.expr('isAuthenticated()')}">
+				<form action="/logout" method="post">
+				<input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"> 
+				<input class="nav-link btn btn-default" style="color: #ac887e; font-weight: bold;" type="submit" value="로그아웃">
+				</form>
+			  </li>
+			  <li class="nav-item" th:unless="${#authorization.expr('isAuthenticated()')}">
+			  <a class="nav-link js-scroll-trigger" style="color: #ac887e; font-weight: bold;" th:href="@{/login}">로그인</a></li>
+            </ul>
+          </div>
+        </div>
+      </nav>
+    </header>
+    <body></body>
+</html>

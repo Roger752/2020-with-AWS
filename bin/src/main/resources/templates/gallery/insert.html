@@ -1,0 +1,134 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html lang="ko" xalns:th="http://www.thymeleaf.org" >
+<head>
+<meta charset="UTF-8">
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+<header th:replace="include/header"></header>
+<title>사진 등록</title>
+</head>
+<body>
+	<div class="container">
+		<input type="hidden" th:each="picture:${picture}">
+		<form action="/gallery/insertProc" method="post">
+			<input type="hidden" name="pic_num" th:value="${picture.pic_num}">
+			<input type="hidden" name="m_num" th:value="${picture.m_num}">
+			<input type="hidden" th:each="picture:${picture}"> <br>
+			<br>
+			<br>
+			<br>
+			<div class="row">
+				<div class="col-md-6">
+					<h3>등록된 사진</h3>
+					<img th:src="${picture.pic_file}"
+						style="width: 400px; height: 350px;" />
+				</div>
+				<div class="col-md-6">
+					<h3>좌표 선택</h3>
+					<div id="map" style="width: 400px; height: 350px;"></div>
+					<input type="text" id="ps2" />
+					<!-- 검색창 -->
+					<button type="button" id="search">위치검색하기</button>
+				</div>
+			</div>
+			<!-- 지도사이즈 고정 -->
+
+			<!-- 검색버튼 -->
+			<input type="hidden" id="lat" name="pic_latitude" /> 
+			<input type="hidden" id="lng" name="pic_longitude" /> 
+			<h3>사진 제목</h3>
+			<input type="text" size="49" class="form-control" name="title" th:value="${picture.pic_title}" /><br> 
+			<h3>사진 설명</h3><textarea rows="5" class="form-control"  cols="51" type="text" name="content" th:text="${picture.pic_content}"></textarea>
+			<br>
+			<button type="submit" value="등록" class="btn btn-primary pull-right">등록</button>
+		</form>
+	</div>
+		<!--Footer-->
+<div class="push" style="height:30px;"></div>
+<footer class="footer"  th:replace="include/footer"></footer>
+</body>
+<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=ecb7905461c4ec0cb87a8bb66bf90c62&libraries=services"></script>
+<script>
+ 	var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
+	mapOption = {
+		center : new kakao.maps.LatLng(35.896285, 128.622003), // 지도의 중심좌표
+		level : 13
+	// 지도의 확대 레벨
+	};
+
+	var map = new kakao.maps.Map(mapContainer, mapOption); // 지도를 생성합니다
+
+	//지도를 클릭한 위치에 표출할 마커입니다
+	var marker = new kakao.maps.Marker({
+	});
+	
+	// 장소 검색 객체를 생성합니다
+	var ps = new kakao.maps.services.Places(); 
+
+	// 키워드로 장소를 검색합니다
+	$('#search').click(function() {
+		ps.keywordSearch($("#ps2").val(),placesSearchCB); 
+	})
+	
+	function placesSearchCB (data, status, pagination) {
+	    if (status === kakao.maps.services.Status.OK) {
+
+	        // 검색된 장소 위치를 기준으로 지도 범위를 재설정하기위해
+	        // LatLngBounds 객체에 좌표를 추가합니다
+	        var bounds = new kakao.maps.LatLngBounds();
+
+	        for (var i=0; i<data.length; i++) {
+	            displayMarker(data[i]);    
+	            bounds.extend(new kakao.maps.LatLng(data[i].y, data[i].x));
+	        }       
+
+	        // 검색된 장소 위치를 기준으로 지도 범위를 재설정합니다
+	        map.setBounds(bounds);
+	    } 
+	}
+	// 지도에 마커를 표시하는 함수입니다
+	function displayMarker(place) {
+	    
+	    // 마커를 생성하고 지도에 표시합니다
+	    var marker = new kakao.maps.Marker({
+	        map: map,
+	        position: new kakao.maps.LatLng(place.y, place.x) 
+	    });
+
+	    // 마커에 클릭이벤트를 등록합니다
+	    kakao.maps.event.addListener(marker, 'click', function() {
+	        // 마커를 클릭하면 장소명이 인포윈도우에 표출됩니다
+	        infowindow.setContent('<div style="padding:5px;font-size:12px;">' + place.place_name + '</div>');
+	        infowindow.open(map, marker);
+	    });
+	}
+	
+	
+	//지도에 마커를 표시합니다
+	marker.setMap(map);
+
+	//지도에 클릭 이벤트를 등록합니다
+	
+	//지도를 클릭하면 마지막 파라미터로 넘어온 함수를 호출합니다
+	kakao.maps.event.addListener(map, 'click', function(mouseEvent) {
+
+		// 클릭한 위도, 경도 정보를 가져옵니다 
+		var latlng = mouseEvent.latLng;
+
+		// 마커 위치를 클릭한 위치로 옮깁니다
+		marker.setPosition(latlng);
+
+		
+		var lat = latlng.getLat();
+		var lng = latlng.getLng();
+		
+		 $("#lat").val(lat);
+		 $("#lng").val(lng);
+		 
+		$("#lat").hide();
+		$("#lng").hide();
+	});
+	
+ 
+</script>
+
+</html>

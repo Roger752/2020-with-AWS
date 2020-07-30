@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="ko" xalns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+<script type="text/javascript"
+	src="//dapi.kakao.com/v2/maps/sdk.js?appkey=ecb7905461c4ec0cb87a8bb66bf90c62"></script>
+<title>Insert title here</title>
+</head>
+<body>
+<input type="hidden" id="p_num" th:value="${p_num}">
+<div id="map" style="width: 400px; height: 350px;"></div>
+</body>
+
+<script>
+var lat;
+var lng;
+
+ $(document).ready(
+		function() {
+			$.ajax({
+				url : "/gallery/locationDetail/" + $('#p_num').val(),
+		         type : "GET",
+		         cache : false,
+		         success : function(data) {
+		         	map.setCenter(new kakao.maps.LatLng(data.pic_latitude, lng = data.pic_longitude)); 
+		        	marker = new kakao.maps.Marker({
+	      			position : map.getCenter()
+		        	});
+		        	 marker.setMap(map);
+					}
+				}); 
+		});  
+		
+		
+var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
+mapOption = {
+	center : new kakao.maps.LatLng(36.01804506780891, 127.89563081836226), // 지도의 중심좌표
+	level : 3
+// 지도의 확대 레벨
+};
+
+var map = new kakao.maps.Map(mapContainer, mapOption); // 지도를 생성합니다
+
+//지도를 클릭한 위치에 표출할 마커입니다
+var marker = new kakao.maps.Marker({
+	// 지도 중심좌표에 마커를 생성합니다 
+	position : map.getCenter()
+});
+
+</script>
+</html>

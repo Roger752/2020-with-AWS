@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="ko" xalns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+<title>Insert title here</title>
+</head>
+<body>
+<div class="ranking">	<!-- 랭킹버튼위해서 필요 -->
+	<button id ="day" type="button">일간</button>
+	<button id = "week" type="button">주간</button>
+	<button id = "month" type="button">월간</button>
+</div>
+<div>
+	<img src="이미지" width="30" height="30">사진마당 랭킹
+</div>
+<div th:each="post:${posts}" class="detail">	<!-- detail이동위해 필요 -->
+	<img th:src="${post.pic_file}" width=150 height=150>
+	<a th:id="${post.p_num}"><p th:text=${post.p_title}></p></a>
+	<p th:text=${post.m_name}></p>
+	<p th:text="${#dates.format(post.p_day, 'yyyy년 MM월 dd일')}"></p></li>
+	<button th:id=${post.p_num}>&nbsp;</button><span th:text=${post.p_recommend}></span>	<!-- 따봉버튼삭제함 자바스크립트가 겹침 -->
+</div>
+</body>
+<script>
+	$('.detail a').click(function(){
+		$(location).attr('href','http://localhost:4007/gallery/detail/' + this.id);
+		});
+
+	$('.ranking button').click(function() {
+		$(location).attr('href', 'http://localhost:4007/gallery/ranking/' + this.id);
+	});
+	
+	$('.detail button').click(function(){ 
+		var url = (window.location.href);
+		url = url.substring(38);
+		$(location).attr('href', 'http://localhost:4007/gallery/recommendProc/' + this.id +'/' + url);
+	});
+	
+	
+	
+</script> 
+</body>
+</html>
+

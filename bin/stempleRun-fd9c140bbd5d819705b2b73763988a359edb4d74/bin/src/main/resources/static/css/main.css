@@ -1,0 +1,18 @@
+p {
+	color:blue;
+}
+
+#logo {
+	border: 1px solid black;
+	font-size: 50px;
+}
+
+#menubar {
+	position: absolute;
+	right: 500px;
+	top: 10px;
+}
+a {
+	margin-left: 30px;
+}
+

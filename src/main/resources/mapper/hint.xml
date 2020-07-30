@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.stempleRun.db.mapper.HintMapper">
+	
+	<insert id="insert">
+		insert into hint values (hint_seq.nextval, #{h_content}, #{h_file}, #{q_num})
+	</insert>
+	
+	<update id="content_change">
+		update hint set h_content = #{h_content} where q_num = #{q_num}
+	</update>
+	
+	<update id="file_change">
+		update hint set h_file = #{h_file} where q_num = #{q_num}
+	</update>
+	
+	<delete id="remove">
+		delete from hint where h_num = #{h_num}
+	</delete>
+</mapper>

@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>아이디어 게시판[글쓰기]</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+</head>
+<style>
+    #footer{
+        position: absolute;
+        bottom: 0;
+        background: black;
+        left:0px;
+        bottom:0px;
+        height:60px;
+        width:100%;
+        text-align: center;
+    }
+</style>
+<body>
+<!--nav바 시작-->
+<nav class="navbar navbar-expand-sm bg-dark navbar-dark">
+    <!-- Brand/logo -->
+    <a class="navbar-brand" href="#">
+        <img src="css/logo2.png" alt="logo" style="width:35px;">
+    </a>
+    <div class="row">
+        <ul class="nav nav-item">
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#">문화재 길잡이</a>
+                <div class="dropdown-menu">
+                    <a class="dropdown-item" href="#">스토리 길잡이</a>
+                    <a class="dropdown-item" href="#">스토리 등록</a>
+                    <a class="dropdown-item" href="#">스토리 관리</a>
+                    <a class="dropdown-item" href="#">빙고 길잡이</a>
+                    <a class="dropdown-item" href="#">빙고 등록</a>
+                    <a class="dropdown-item" href="#">빙고 관리</a>
+                </div>
+            </li>
+        </ul>
+        <ul class="nav nav-item">
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#">컬처 클라우드</a>
+                <div class="dropdown-menu">
+                    <a class="dropdown-item" href="#">핫스팟</a>
+                    <a class="dropdown-item" href="#">사진마당</a>
+                    <a class="dropdown-item" href="#">포토클라우드</a>
+                </div>
+            </li>
+        </ul>
+        <ul class="nav nav-item">
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#">컨텐츠 관리</a>
+                <div class="dropdown-menu">
+                    <a class="dropdown-item" href="#">스토리 관리</a>
+                    <a class="dropdown-item" href="#">빙고 관리</a>
+                    <a class="dropdown-item" href="#">게임 관리</a>
+                    <a class="dropdown-item" href="#">포토 관리</a>
+                </div>
+            </li>
+        </ul>
+        <ul class="nav nav-item">
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#">리뷰,아이디어 게시판</a>
+                <div class="dropdown-menu">
+                    <a class="dropdown-item" href="#">리뷰 게시판</a>
+                    <a class="dropdown-item" href="#">스토리 리뷰</a>
+                    <a class="dropdown-item" href="#">빙고 리뷰</a>
+                    <a class="dropdown-item" href="#">아이디어 게시판</a>
+                    <a class="dropdown-item" href="#">스토리 아이디어</a>
+                    <a class="dropdown-item" href="#">빙고 아이디어</a>
+                </div>
+            </li>
+        </ul>
+    </div>
+    <div class="navbar-collapse w-500 ">
+        <ul class="navbar-nav ml-auto">
+            <li class="nav-item">
+                <a class="nav-link" href="#">송경진</a>
+            </li>
+        </ul>
+    </div>
+    <div class="text-warning">님 반갑습니다.</div>
+</nav>
+<br/><br/><br/><br/>
+
+<div class="container">
+    <article>
+        <div class="container" role="main">
+            <h1>아이디어 작성</h1><hr>
+            <form name="form" id="form" >
+                <div class="mb-3">
+                    <label for="title">제목</label>
+                    <input type="text" class="form-control" placeholder="제목을 입력해 주세요">
+                </div>
+                <div class="mb-3">
+                    <label for="reg_id">테마 선택</label>
+                    <select id="company" class="form-control">
+                        <option>스토리 길잡이</option>
+                        <option>빙고 길잡이</option>
+                        <option>기타</option>
+                    </select>
+                </div>
+                <div class="mb-3">
+                    <label for="content">내용</label>
+                    <textarea class="form-control" rows="5" name="content" id="content" placeholder="내용을 입력해 주세요" ></textarea>
+                </div>
+                <div class="mb-3">
+                    <label class="btn btn-primary btn-file">
+                        파일첨부 <input type="file" style="display: none;">
+                    </label>
+
+                </div>
+            </form>
+            <div>
+                <button type="button" class="btn btn btn-dark float-right" id="btnSave">저장</button>
+            </div>
+        </div>
+    </article>
+</div>
+</body>
+<!--Footer-->
+<div id="footer">
+    <p class="text-white">문화재청 ｜ 이용안내 ｜ 개인정보처리방침 ｜ 저작권정책사이트  ｜ 오류신고</p>
+</div>
+</html>

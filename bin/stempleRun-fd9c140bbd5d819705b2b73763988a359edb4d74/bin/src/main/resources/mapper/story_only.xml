@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.stempleRun.db.mapper.Story_onlyMapper">
+	
+	<insert id="insert">
+		insert into story_only values (#{s_num}, #{c_num}, #{q_num}, #{s_order})
+	</insert>
+	
+</mapper>

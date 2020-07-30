@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>포토클라우드 태그</title>
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
+<link rel="stylesheet" th:href="@{/css/base.css}">
+<!-- <script th:src="@{/js/photo.js}"></script> -->
+</head>
+
+<body>
+	<div class="blackscreen">
+		<!-- 닫기 -->
+		<div class="bkcontainer">
+			<div class="bkform"></div>
+		</div>
+	</div>
+	<nav class="navbar navbar-expand-lg navbar-light bg-light">
+      <h2>태그별 사진</h2>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav">
+          <li class="nav-item">
+            <a class="nav-link" th:href="@{/date/}">날짜</a> 
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" th:href="@{/place/}">장소</a> 
+          </li>
+            <li class="nav-item">
+            <a class="nav-link" th:href="@{/photoscloud/tagproc}">태그</a>
+          </li>
+        </ul>
+      </div>
+    </nav>
+	<div class="container">
+
+		<div>
+			<form class="searchform" th:action="@{/photoscloud/tagproc}" method="get">
+					<input type="text" name="tag" class="form-control" placeholder="검색어를 입력하세요.">
+					<button class="btn btn-primary" type="submit">검색</button>
+			</form>
+		</div>
+		<section class="photoall">
+			<div class="pholist" th:each="photo : ${phototag}">
+
+				<h5 style="color: black" th:text="${photo.pic_title}"></h5>
+				<!-- <div th:text="${photo.pin_num}"></div> -->
+
+				<div class="photoA">
+					<a th:onclick="|javascript:photoview('${photo.pic_num}')|"
+						class="hovera"> <img class="photoobj${photo.pic_num}"
+						th:src="${photo.pic_file}" alt="x">
+					</a>
+				</div>
+				<div>
+					<div style="margin-top: 10px">
+						<button type="button" class="btn btn-primary"
+							th:onclick="|javascript:photodelete('${photo.pic_num}')|">삭제</button>
+						<button type="button" class="btn btn-primary"
+									th:onclick="|javascript:photoupdate('${photo.pic_num}')|">수정</button>
+					</div>
+				</div>
+			</div>
+		</section>
+	</div>
+		<script>
+		function modal(obj) {
+		    var pic_file = obj.pic_file;
+		    var pic_title = obj.pic_title;
+		    var pic_content = obj.pic_content;
+		    var pic_sns = obj.pic_sns;
+		    var pic_tag = obj.pic_tag;
+		    var m_num = obj.m_num;
+		    var pic_date = obj.pic_date;
+		    var pic_place = obj.pic_place;
+
+		    var photoobj = '<img class="imgimg" th:src="" alt="">';
+
+		    var bkform = document.querySelector('.bkform');
+		    var str = '<div><div><div onclick="this.parentElement.parentElement.parentElement.parentElement.parentElement.style.display='
+		            +"'none'"
+		            +'" class="close"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="black" width="18px" height="18px"><path d="M0 0h24v24H0z" fill="none"/><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg></div></div><div class="modalimg"></div><div class="contentbox">'
+		            + '<div>제목 : '
+		            + pic_title
+		            + '</div><div>내용 : '
+		            + pic_content
+		            + '</div><div>SNS : '
+		            + pic_sns
+		            + '</div><div>태그 : '
+		            + pic_tag
+		            + '</div><div>작성 날짜 : '
+		            + pic_date
+		            + '</div><div>장소: '
+		            + pic_place
+		            + '</div></div></div>';
+		    bkform.innerHTML = str;
+		    var modalimg = document.querySelector('.modalimg');
+		    modalimg.innerHTML = photoobj;
+		    var imgimg = document.querySelector('.imgimg');
+		    imgimg.src = pic_file;
+		    $('.blackscreen').css("display", "block");
+		}
+
+		function photoview(pic_num) {
+
+		    $.ajax({
+		        url : '/photoscloud/view/' + pic_num,
+		        type : 'GET',
+		        success : function(obj) {
+
+		            if (obj != null) {
+		                modal(obj);
+		            } else {
+		                alert("실패했어!");
+		                check = 1;
+		            }
+		        },
+		        error : function() {
+		            alert("error");
+		        }
+		    })
+		}
+		/*사진 삭제 */
+		function photodelete(pic_num) {
+		    alert("삭제되었습니다");
+		    window.location.href = "/photoscloud/delete/" + pic_num;
+		}
+		
+		function photoupdate(pic_num) {
+		    window.location.href = "/photoscloud/update/" + pic_num; //여기서 번호를 들고 왔죠?ㅔ네
+		}
+		</script>
+	
+</body>
+</html>

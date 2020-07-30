@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.stempleRun.db.mapper.Bingo_onlyMapper">
+	<insert id="insert">
+		insert into bingo_only values (#{b_num},#{c_num},#{b_order})
+	</insert>
+	
+	<select id="bingocalldetailselect" resultType="com.stempleRun.db.dto.Bingo_onlyVO">
+		SELECT * FROM bingo_only WHERE b_num = #{b_num}
+	</select>
+	
+	
+</mapper>

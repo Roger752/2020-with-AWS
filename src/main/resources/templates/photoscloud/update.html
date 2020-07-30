@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>사진수정</title>
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+<link rel="stylesheet" th:href="@{/css/base.css}">
+</head>
+<body>
+	<form th:action="@{/photoscloud/insertProc}" method="post"
+		enctype="multipart/form-data">
+		<input type="text" style="display:none" name="pic_num" th:value="${picture.pic_num}">
+		<div class="container">
+					<h2>사진 수정</h2><hr>
+			<section class="photoadd">
+				<div class="photo_left">
+					<img id="img" />
+					<div class="filebox">
+					
+						<!--사진등록 -->
+						 <label for="pic_file"></label> 
+						<div class="photosee" style="height: 100%; margin-bottom: 10px;">
+							<img th:src = "${picture.pic_file}"   style="height: 350px;" />
+						</div>
+						  <h5> [사진은 수정할 수 없습니다] </h5>
+				 <input type="file" id="pic_file" name="pic_file"  class="path_img"
+							 onchange="photosee(this)" /> 
+					</div>
+				</div>
+				
+				<div class=photo_right>
+					<div>
+						<label for="pic_title">사진명</label> <input type="text"
+							class="form-control" id="pic_title" th:value="${picture.pic_title}" name="pic_title"
+							placeholder="사진명을 수정하세요.">
+					</div>
+
+					<div>
+						<label for="pic_content">사진 설명</label>
+						<textarea class="form-control" id="pic_content" name="pic_content"
+							rows="3" th:text="${picture.pic_content}"></textarea>
+					</div>
+
+					<div>
+						<label for="pic_tag">태그</label> <input type="text"
+							class="form-control" id="pic_tag" name="pic_tag"
+							th:value="${picture.pic_title}" placeholder="태그를 수정하세요.">
+					</div>
+				<!-- 	<div>
+						SNS <br> <label> <input type="checkbox"
+							name="pic_sns" value="photo" th:value="${picture.pic_sns}">사진마당
+						</label> <label> <input type="checkbox" name="pic_sns"
+							value="twitter" th:value="${picture.pic_sns}">twitter
+						</label> <label> <input type="checkbox" name="pic_sns"
+							value="facebook" th:value="${picture.pic_sns}"> facebook
+						</label> <label> <input type="checkbox" name="pic_sns"
+							value="instagram" th:value="${picture.pic_sns}"> instagram
+						</label>
+					</div> -->
+
+					<div>
+						<label for="pic_place">장소</label> <input type="text"
+							class="form-control" id="pic_place" name="pic_place" th:value="${picture.pic_place}"
+							placeholder="장소를 수정하세요.">
+					</div>
+				</div>
+			</section>
+			<div style="margin-top: 10px;" class="btnbox">
+				<div>
+					<button type="submit" class="btn btn-primary btn1" style="width:50%;">수정</button>
+					<button onclick="location.href='/photoscloud/list'" style="width:50%;"
+						class="btn btn-primary btn1">취소</button>
+				</div>
+			</div>
+		</div>
+	</form>
+	
+</body>
+</html>
+
+

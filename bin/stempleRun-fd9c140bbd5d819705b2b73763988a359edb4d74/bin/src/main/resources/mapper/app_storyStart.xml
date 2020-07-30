@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.stempleRun.db.mapper.app_storyStartMapper">
+
+	<select id="getNeedPHF" resultType="com.stempleRun.db.dto.app_storyStart">
+		select so.s_order, c.c_name, c.c_latitude, c.c_longitude, q.q_content, h.h_content, h.h_file
+		from story_only so, 
+     		 cultural c,
+    		 question q, hint h 
+		where c.c_num = so.c_num
+    		  and q.q_num = so.q_num
+    		  and q.q_num = h.q_num
+    		  and s_num = #{s_num}
+		order by s_order asc
+	</select>
+	
+</mapper>

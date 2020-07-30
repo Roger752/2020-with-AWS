@@ -1,0 +1,24 @@
+uploads는 static폴더 밑에 있어야한다. => static밑에 아무 폴더 만들고 application.propertis주							소를 변경
+
+
+
+security confing에서 css 사진 통과시켜줄 코드
+
+// css랑 이미지 같은거 무조건 퇑과시켜주기 위한거
+	@Override
+	public void configure(WebSecurity web) {
+		web.ignoring().antMatchers("/picture/**", "/css/**", "/uploads/**");
+	}
+
+
+
+db 쿼리문
+select c.c_name, so.s_order, q.q_content, h.h_content, h.h_file 
+from story_only so, 
+     cultural c,
+     question q, hint h 
+where c.c_num = so.c_num
+    and q.q_num = so.q_num
+    and q.q_num = h.q_num
+    and s_num = 161
+order by s_order asc;

@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.stempleRun.db.mapper.PostMapper">
+
+	<select id="getList" resultType="com.stempleRun.db.dto.PostVO"> 	<!-- 목록 -->
+		select * from post
+	</select>
+	
+	<select id="getPopular" resultType="com.stempleRun.db.dto.PostVO">	<!-- 인기순목록 -->
+		select * from post order by p_recommend desc
+	</select>
+	
+	<select id="getLately" resultType="com.stempleRun.db.dto.PostVO">	<!-- 최신순목록 -->
+		select * from post order by p_day desc
+	</select>
+
+	<select id="getDayRank"  resultType="com.stempleRun.db.dto.PostVO">	<!-- 일간랭킹 -->
+		<![CDATA[ select * from(select * from post where substr(p_day,1,8)=to_char(sysdate) order by p_recommend desc) where rownum <=3 ]]>
+	</select>
+
+	<select id="getWeekRank" resultType="com.stempleRun.db.dto.PostVO">	<!-- 주간랭킹 -->
+		<![CDATA[ select * from(select * from post where p_day between sysdate - to_char(sysdate,'d') and sysdate-to_char(sysdate,'d')+8 order by p_recommend desc) where rownum <=3]]>
+	</select>
+
+	<select id="getMonthRank" resultType="com.stempleRun.db.dto.PostVO"> <!-- 월간랭킹 -->
+		<![CDATA[select * from(select * from post where substr(p_day,4,2)=to_char(sysdate,'mm') order by p_recommend desc) where rownum <=3]]>
+	</select>
+	<select id="postWriter" parameterType="int" resultType="String">	<!-- 작성자알아오기 -->
+		select m_name from member a, post b where p_num = #{p_num} and a.m_num = b.m_num
+	</select>
+	
+	<insert id="postInsert" parameterType="com.stempleRun.db.dto.PostVO">	<!-- 게시글 쓰기 -->
+ 		insert into post 
+ 		VALUES (post_seq.nextval, #{p_title}, #{p_content}, #{p_day}, 0, (null), 1, #{m_num}, #{pic_num})
+    </insert>
+    
+    <insert id="pictureInsert" parameterType="com.stempleRun.db.dto.PictureVO">	
+    	insert into picture
+    	values (picture_seq.nextval, #{pic_file}, #{pic_latitude}, #{pic_longitude}, #{pic_tag}, #{m_num}, (null),(null),(null),(null),(null))
+    </insert>
+    
+    <select id="postDetail" parameterType="int" resultType="com.stempleRun.db.dto.PostVO">
+        SELECT * FROM post WHERE p_num = #{p_num}
+    </select>
+    <select id="pictureDetail" parameterType="int" resultType="String">
+    	select pic_file from picture a, post b where p_num = #{p_num} and a.pic_num = b.pic_num
+    </select>
+    <select id="locationDetail" parameterType="int" resultType="com.stempleRun.db.dto.PictureVO">
+    	select pic_latitude, pic_longitude, pic_tag from picture a, post b where  p_num =#{p_num} and a.pic_num = b.pic_num
+    </select>
+    
+    <select id="getPictag" parameterType="int" resultType="String">
+   	 	select pic_tag from picture a, post b where a.pic_num = b.pic_num and p_num = #{p_num}
+    </select>
+    
+    <select id="getPicnum" parameterType="int" resultType="int">
+		select a.pic_num from picture a, post b where p_num = #{p_num} and a.pic_num = b.pic_num
+	</select>
+	<select id="getLatitude" parameterType="int" resultType="String">
+	select pic_latitude from picture a, post b where  p_num =#{p_num} and a.pic_num = b.pic_num
+	</select>
+
+	<select id="getLongitude" parameterType="int" resultType="String">
+ 	select pic_longitude from picture a, post b where  p_num =#{p_num} and a.pic_num = b.pic_num
+ 	</select>
+
+	<delete id = "postDelete" parameterType="Integer">
+		delete from post where p_num = #{p_num}
+	</delete>
+	
+	<update id = "postUpdate">
+		update post set p_title = #{p_title}, p_content = #{p_content} where p_num=#{p_num} 
+	</update>
+	
+	<update id = "locationUpdate" parameterType="com.stempleRun.db.dto.PictureVO">
+		update picture set pic_latitude = #{pic_latitude}, pic_longitude = ${pic_longitude} where pic_num = #{pic_num}
+	</update>
+	
+	<update id="pictagUpdate" parameterType = "com.stempleRun.db.dto.PictureVO">
+		update picture set pic_tag = #{pic_tag} where pic_num = #{pic_num}
+	</update>
+	
+	<update id="getRecommend">
+		update post set p_recommend = p_recommend +1 where p_num = #{p_num}
+	</update>
+	
+	<select id = "getPicture" parameterType="int" resultType="com.stempleRun.db.dto.PictureVO">
+		select * from picture where pic_num = #{pic_num}
+	</select>
+	
+	<select id="getInfo" resultType="com.stempleRun.db.dto.PostVO">
+		<![CDATA[select * from
+	(select a.p_num, a.p_title, a.p_content, a.p_day, a.p_recommend, a.p_file, a.b_num, a.m_num, a.pic_num, b.pic_latitude, b.pic_longitude 
+	from picture b, post a 
+	where substr(p_day,1,8)=to_char(sysdate) and a.pic_num = b.pic_num
+	order by p_recommend desc) where rownum <=3]]>
+	</select>
+	
+	
+	<!-- 일간 좌표조회 -->
+	<select id="getDailyPost" resultType="com.stempleRun.db.dto.PostVO">
+		<![CDATA[ select * from
+	(select a.p_num, a.p_title, a.p_content, a.p_day, a.p_recommend, a.p_file, a.b_num, a.m_num, a.pic_num, b.pic_latitude, b.pic_longitude 
+	from picture b, post a 
+	where substr(p_day,1,8)=to_char(sysdate) and a.pic_num = b.pic_num
+	order by p_recommend desc) where rownum <=3 ]]>
+	</select>
+	
+	<!-- 주간 좌표조회 -->
+	<select id="getWeeklyPost" resultType="com.stempleRun.db.dto.PostVO">
+		<![CDATA[ select * from
+(select a.p_num, a.p_title, a.p_content, a.p_day, a.p_recommend, a.p_file, a.b_num, a.m_num, a.pic_num, b.pic_latitude, b.pic_longitude 
+	from picture b, post a 
+ where p_day between sysdate - to_char(sysdate,'d')-3 and sysdate-to_char(sysdate,'d')+4 and a.pic_num = b.pic_num
+ order by p_recommend desc) where rownum <=3]]>
+	</select>
+	<!-- 월간 좌표조회 -->
+	<select id="getMonthlyPost" resultType="com.stempleRun.db.dto.PostVO">
+	<![CDATA[select * from
+(select a.p_num, a.p_title, a.p_content, a.p_day, a.p_recommend, a.p_file, a.b_num, a.m_num, a.pic_num, b.pic_latitude, b.pic_longitude 
+from picture b, post a 
+where substr(p_day,4,2)=to_char(sysdate,'mm') and a.pic_num = b.pic_num
+order by p_recommend desc) where rownum <=3]]>
+	</select>
+</mapper>

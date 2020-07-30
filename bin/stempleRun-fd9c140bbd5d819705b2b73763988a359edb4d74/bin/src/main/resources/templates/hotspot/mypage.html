@@ -1,0 +1,127 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<script src="//code.jquery.com/jquery.min.js"></script>
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
+<script
+	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
+<style>
+.container {
+	width: 80%;
+}
+
+li {
+	list-style: none;
+}
+
+.1 {
+	width: 30%;
+	float: left;
+}
+
+.2 {
+	float: right;
+}
+
+.story {
+	font-size: 30px;
+}
+
+#myunder {
+	width: 90%;
+}
+
+.storyside {
+	width: 30%;
+	float: left;
+	text-align:center;
+}
+
+.bingoside {
+	width: 30%;
+	float: left;
+	text-align:center;
+}
+.bingo{
+	font-size:30px;
+}
+.rankside{
+	width:30%;
+	float: left;
+}
+.rank{
+	font-size:30px;
+}
+</style>
+</head>
+<body>
+	<div class="1">
+		<a>최종 접속 일자: </a>
+		<p th:text="${#calendars.format(#calendars.createNow(), 'yyyy-MM-dd HH:mm:ss')}"></p>
+	</div>
+	<div class="container">
+		<div class="2">
+			<ul>
+				<li th:each="Member:${memberList}">접속자: <a
+					th:text=${Member.m_name}></li>
+			</ul>
+			<ul>
+				<li th:each="Member:${memberList}">아이디 : <a
+					th:text=${Member.m_id}></li>
+			</ul>
+			<ul>
+				<li th:each="Member:${memberList}">비밀번호: <a
+					th:text=${Member.m_pw}></li>
+			</ul>
+			<ul>
+				<li th:each="Member:${memberList}">이메일: <a
+					th:text=${Member.m_email}></li>
+			</ul>
+		</div>
+	</div>
+	<br>
+	<hr>
+	<div id="myunder">
+		<div class="storyside">
+			<div class="story">
+				<a th:href="@{/}">스토리 길잡이</a>
+			</div>
+			<div>
+				<a >진행중인 스토리</a>
+			</div>
+			<div>
+				<a>최근 클리어한 스토리</a>
+			</div>
+
+		</div>
+		<div class="bingoside">
+			<div class="bingo">
+				<a th:href="@{/}">빙고 길잡이</a>
+			</div>
+			<div>
+				<a>진행중인 빙고</a>
+			</div>
+			<div>
+				<a>최근 클리어한 빙고</a>
+			</div>
+		</div>
+		
+		<div class="rankside">
+			<div class="rank">
+				<a th:href="@{/}">내 랭킹은 어디일까?</a>
+			</div>
+			<div>
+				<a>최근 클리어한 빙고</a>
+				<div>터질까봐 지움</div>
+			</div>
+		</div>
+		
+	</div>
+
+</body>
+</html>

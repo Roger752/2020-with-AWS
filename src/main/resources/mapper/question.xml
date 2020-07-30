@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.stempleRun.db.mapper.QuestionMapper">
+
+	<insert id="insert">
+		insert into question values (question_seq.nextval, #{q_content})
+	</insert>
+	
+	<select id="findNum" resultType="com.stempleRun.db.dto.Question">
+		select * from question where q_content = #{q_content}
+	</select>
+
+	<select id="getQuestion" resultType="com.stempleRun.db.dto.Question">
+		select * from question where q_num = #{q_num}
+	</select>
+	
+	<select id="getQ_num" resultType="int">
+		select question_seq.currval from DUAL
+	</select>
+	
+	<update id="change">
+		update question set q_content = #{q_content} where q_num = #{q_num}
+	</update>
+	
+	<select id="getP_num">
+		select question_seq.currval from DUAL
+	</select>
+	
+	<delete id="remove">
+		delete from question where q_num = #{q_num}
+	</delete>
+	
+</mapper>

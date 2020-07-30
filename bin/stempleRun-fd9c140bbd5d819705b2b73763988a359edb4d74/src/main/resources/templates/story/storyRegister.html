@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+
+<header th:replace="include/header"></header>
+	<meta charset="UTF-8">
+	
+</head>
+	
+<body>
+
+<!-- 헤더 -->
+<!-- <header th:replace="include/header"></header> -->
+
+<br><br><br><br><br><br><br><br>
+<div class="container">
+    <h1 style="text-align: left;">스토리 등록</h1>
+	<br>	<br>
+</div>
+<!--소제목-->
+
+<div class="container show-grid">
+    <div class="row">
+        <div class="col-md-10">
+        	<form action="/storymake/save" method="post">
+            	<div>
+            		<label>지역 :</label>
+            		<select name="area_num" id="area_num">
+            			<option th:each="area:${areaList}" th:text=${area.area_name} th:value=${area.area_num}></option>
+            		</select>
+            	</div>
+            	
+                <div class="mb-7">
+                    <label for="title">제목</label>
+                    <input name="s_title" id="s_title" type="text" class="form-control" placeholder="제목을 입력해 주세요">
+                </div>
+                
+                <div class="mb-7">
+                    <label for="content">스토리설명</label>
+                    <textarea name="s_content" class="form-control" rows="8" placeholder="스토리에 대한 설명을 입력해주세요" ></textarea>
+                </div>
+        	</div>
+    </div>
+</div>
+<div class="container">
+    <hr>
+    <div>
+        <button type="button" class="btn btn btn-dark float-right " id="cancel">취소</button>
+        <button type="submit" class="btn btn btn-dark float-right mr-1" id="save">저장</button>
+    </div>
+</div>
+		</form>
+<div class="push" style="height:250px;"></div>
+<footer th:replace="include/footer"></footer>
+
+
+</body>
+
+</html>

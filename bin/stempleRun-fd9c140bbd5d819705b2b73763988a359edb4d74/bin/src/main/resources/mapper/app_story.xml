@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.stempleRun.db.mapper.app_StoryMapper">
+
+	<select id="getStorys" resultType="com.stempleRun.db.dto.app_story">
+		select s_num, s_title, s_content, s.area_num, a.area_name
+		from story s, area a
+		where s.area_num = a.area_num
+	</select>
+	
+</mapper>

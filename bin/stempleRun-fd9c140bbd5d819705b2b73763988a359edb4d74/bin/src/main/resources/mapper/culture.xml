@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.stempleRun.db.mapper.CultureMapper">
+
+	<select id="getCultures" resultType="com.stempleRun.db.dto.Culture">
+		select * from cultural
+	</select>
+	
+	<select id="getCulture" resultType="com.stempleRun.db.dto.Culture">
+		select * from cultural where c_num = #{c_num}
+	</select>
+	
+	<insert id="insert">
+		insert into cultural values (cultural_seq.nextval, #{c_name}, #{c_latitude}, #{c_longitude}, null, 2, 1)
+	</insert>
+	
+</mapper>

@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+
+<html lang="ko" xalns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<style>
+.main {
+    width : 1135px;
+    height : 1000px;
+    border : solid 1px red;
+}
+
+.box {
+    width : 475px;
+    height : 400px;
+    border : solid 1px red;
+    margin-left:50px;
+    margin-right:25px;
+    margin-top: 50px;
+    float : left;
+}
+.picDate {
+    width : 700px;
+    height : 400px;
+    border : solid 1px red;
+    margin-left:190px;
+    margin-top:50px;
+    float : left;
+}
+ul li {
+    list-style-type : none;
+}
+</style>
+<body>
+<div class="main">
+	<form action="/gallery/insertProc" method="post" enctype="multipart/form-data">
+		<div class="box">
+    		<ul style="padding-left:37px;">
+        		<li><img src="이미지" width="400" height="250"></li>
+            		<input type="text" class="form-control" name="file">
+                <li><button type="button" style="float:right; margin-right:39px;">사진찾기</button></li>
+        	</ul>
+    	</div>
+    	<div class="box">
+        	<ul style="padding-left:37px;">
+            	<li><img src="이미지" width="400" height="250"></li>
+            	<li><button type="button" style="float:right; margin-right:39px;">위치찾기</button></li>
+        	</ul>
+    	</div>
+    	<div class="picDate">
+        	<ul>
+    	    	<li style="border:solid 1px red; width:120px; height:20px; float:left; margin-right: 75px;">사진 날짜</li>
+            	<li><input type = "text" name="date" size="20" placeholder="yyyy-MM-dd"></li>
+        	</ul>
+        	<ul>
+                <li style="border:solid 1px red; width:120px; height:20px; float:left; margin-right: 75px;">사진 제목</li>
+            	<li><input type="text" size="50" class="form-control" name="title"></li>
+        	</ul>
+        	<ul>
+           		<li style="border:solid 1px red; width:180px; height:20px; float:left; margin-right: 15px;">사진에 대한 간단한 설명</li>
+            	<textarea rows="5" cols="51" type="text" name="content"></textarea>
+        	</ul>
+        	<ul>
+            	<li style="margin : 0px auto;width: 100px;"><button onclick="window.location.href='http://localhost:4007/gallery/ranking'" type="submit" value="등록">등록</button></li>
+        	</ul>
+    	</div>
+	</form>
+</div>
+</body>
+</html>

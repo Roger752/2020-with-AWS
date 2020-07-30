@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.stempleRun.db.mapper.MemberMapper">
+
+	<select id="getMembers" resultType="com.stempleRun.db.dto.Member">
+		select * from member
+	</select>
+
+	<select id="getMember" resultType="com.stempleRun.db.dto.Member">
+		select * from member where m_Id = #{id}
+	</select>
+	
+		<select id="getM_num" resultType="int">
+		select m_num from member where m_id=#{id}
+	</select>
+	
+	<select id="getM_name" resultType="String">
+		select m_name from member where m_num=#{id}
+	</select>
+	
+</mapper>

@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>리뷰게시판</title>
+<header th:replace="include/header"></header>
+</head>
+<body>
+<!-- Hero Slider -->
+    <section class="bg-cencer bg-cover" style="background: url(/img/mainphoto/boardphoto.jpg)">
+      <div class="dark-overlay">
+        <div class="overlay-content py-5 index-forward">
+          <div class="container py-2 mt-2">
+            <div class="row py-2 text-white text-center">
+              <div class="col-lg-7 mx-auto">
+                <h1 class="text-xl">빙고 목록</h1>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <section class="py-5">
+      <div class="container py-5">
+ 		<div class="table-responsive">
+            <table class="table table-hover">
+                <thead class="thead-dark">
+                    <tr>
+                        <th>빙고 목록번호</th>
+                        <th>빙고 제목</th>
+                        <th>빙고 내용</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="bingocall:${bingo}" th:onclick="'window.location.href=\'/bingo/bingocalldetail/' + ${bingocall.b_num} + '\''">
+                    <input type="hidden" th:id="${bingocall.b_num}">
+                       <td th:text=${bingocall.b_num}></td>
+	                        <td><a th:id="${bingocall.b_title}">
+	                        <span th:text=${bingocall.b_title}></span></a>
+                        <td th:text=${bingocall.b_content}></td>
+                    </tr>
+                </tbody>
+            </table>
+            <br/><br/>
+            <div class="text-center">
+                <ul class="pagination justify-content-center">
+                    <li class="page-item"><a class="page-link" href="#">1</a></li>
+                    <li class="page-item"><a class="page-link" href="#">2</a></li>
+                    <li class="page-item"><a class="page-link" href="#">3</a></li>
+                    <li class="page-item"><a class="page-link" href="#">4</a></li>
+                    <li class="page-item"><a class="page-link" href="#">5</a></li>
+                </ul>
+            </div>
+        </div>
+      </div>
+    </section>
+</body>
+</html>

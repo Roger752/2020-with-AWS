@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.stempleRun.db.mapper.SpotMapper">
+	<select id="getPictures" resultType="com.stempleRun.db.dto.Picture">
+		select * from picture
+	</select>
+	<select id="getSearchList" resultType="com.stempleRun.db.dto.PostVO">
+		select a.pic_file, a.pic_latitude, a.pic_longitude, b.p_num, b.p_title, b.p_day, b.p_area, b.p_recommend from picture a, post b where a.pic_num = b.pic_num and b.p_area like '%'||#{keyword}||'%'
+	</select>
+	<select id="getPicture" resultType="com.stempleRun.db.dto.PictureVO">
+		select a.pic_file from picture a, post b where a.pic_num = b.pic_num and a.pic_num =#{pic_num}
+	</select>
+	<select id="getWeekPictures" resultType="com.stempleRun.db.dto.Picture">
+	<![CDATA[select * from(select * from picture where pic_date between sysdate - to_char(sysdate,'d') and sysdate-to_char(sysdate,'d')+8) where rownum <=3]]>
+	</select>
+	<select id="getMonthPictures" resultType="com.stempleRun.db.dto.Picture">
+	<![CDATA[select * from(select * from picture where substr(pic_date,4,2)=to_char(sysdate,'mm')) where rownum <=3]]>
+	</select>
+	<select id="getDayPictures" resultType="com.stempleRun.db.dto.Picture">
+	<![CDATA[select * from(select * from picture where substr(pic_date,1,8)=to_char(sysdate)) where rownum <=3]]>
+	</select>
+</mapper>

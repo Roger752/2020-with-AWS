@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<meta charset="UTF-8">
+<title>Insert title here</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+</head>
+<body>
+<h2> 게시글 수정ㄹㅇ 왜 안되는데 세계관최강자들의싸움이다 ㄹㅇ </h2>
+	<div class="container">
+		<form action="/review/updateProc" method="post">
+			<div class="container">
+				<div class="form-group">
+					<label>제목</label>
+					<input type="hidden" name="bno" th:value="${reviewboardupdate.bno}">
+				</div>
+				<div class="form-group">
+					<label>제목</label>
+					<textarea class="form-control" name="title" th:field="${reviewboardupdate.title}"></textarea>
+				</div>
+				<div class="form-group">
+					<label>게임유형</label>
+					<textarea class="form-control" name="type" th:field="${reviewboardupdate.type}"></textarea>
+				</div>
+				<div class="form-group">
+					<label>내용</label>
+					<textarea class="form-control" name="memo" th:field="${reviewboardupdate.memo}"></textarea>
+				</div>
+			</div>
+			<button type="submit" class="btn btn-primary">수정</button>
+		</form>
+	</div>
+</body>
+</html>

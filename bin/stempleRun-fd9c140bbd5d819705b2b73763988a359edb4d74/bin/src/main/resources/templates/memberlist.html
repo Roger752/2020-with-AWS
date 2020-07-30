@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org" th:replace="~{layout::layout(~{::title}, ~{}, ~{::section})}">
+<head>
+<meta charset="UTF-8">
+<title>Member List</title>
+</head>
+<body>
+	<section>
+		<p>Member List 한글나오냐</p>
+		<ul>
+			<li th:each="member:${memberList}"><p th:text=${member.m_name}></p></li>
+		</ul>
+	</section>
+</body>
+</html>

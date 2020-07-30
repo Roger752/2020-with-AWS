@@ -1,0 +1,127 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html xmlns:th="http://www.thymeleaf.org">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<script src="//code.jquery.com/jquery.min.js"></script>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
+<header th:replace="include/header"></header>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
+<script src="https://dapi.kakao.com/v2/maps/sdk.js?appkey=59113c13fb94cdb62925a139a684253e&libraries=clusterer"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+</head>
+<body><br><br><br><br>
+<div class="container">
+<div>
+	<div>
+		<div class="search_button button">
+				<button id="day" type="button" class="btn btn-primary">일간</button>
+				<button id="week" type="button" class="btn btn-primary">주간</button>
+				<button id="month" type="button" class="btn btn-primary">월간</button>
+		</div>
+			<br>
+
+	</div>
+</div>
+<div class="col-sm-6">
+	<div>
+		<section style="padding-bottom : 0px; padding-top:0px;" >
+			<form role="form" method="get">
+				<table class="table table-hover">
+					<thead>
+						<tr>
+							<th>사진</th>
+							<th>제목</th>
+							<th>날짜</th>
+							<th>위치</th>
+							<th>추천수</th>
+						</tr>
+					</thead>
+					<tbody  th:each="info:${info}"	>
+						<tr id="detail" class="godetail">
+							<td th:id="${info.p_num}"><img th:src="${info.pic_file}"width=150, height=150></td>
+							<a><td th:id="${info.p_num}" th:text="${info.p_title}"></td>
+							<td th:id="${info.p_num}" th:text="${#dates.format(info.p_day, 'M월 dd일')}"></td>
+							<td th:id="${info.p_num}" th:text="${info.p_area}"></td>
+							<td th:id="${info.p_num}" th:text="${info.p_recommend}"></td></a>
+							<input type="hidden" id="lat" th:value="${info.pic_latitude}">
+							<input type="hidden" id="lng" th:value="${info.pic_longitude}">
+						</tr>
+					</tbody>
+				</table>
+			</form>
+		</section>
+				<form action="/hotspot/hotspot_locate">
+				<div>
+				<!-- <input name="keyword" type="text" placeholder="검색할 내용"> -->
+				<select name="keyword">
+				<option value="서울">서울</option>
+				<option value="대구">대구</option>
+				<option value="경주">경주</option>
+				</select>
+				<button>검색하기</button>
+			</div>
+		</form>
+	</div>
+	
+</div>
+		<div class="col-sm-6"><br>
+		<div id="map" style="width: 430px; height: 525px;" ></div>
+		</div>
+<input type="hidden" id="page" value="day" th:value="${page}">
+
+
+</div>
+</div>
+<script>
+
+		$('.search_button button').click(
+				function() {
+									
+					location.href="/gallery/testpage/"+this.id;
+				});
+		
+		$('#detail td').click(
+				function() {
+					$(location).attr('href',
+							'http://localhost:4007/gallery/detail/' + this.id);
+				});
+
+		// 좌표불러오기
+		$(document).ready(
+				function() {
+					$.ajax({
+						url : "/gallery/test/"+ $("#page").val(),
+						type : "GET",
+						cache : false,
+						success : function(data) {
+							for (var i = 0; i < data.length; i++) {
+								var marker = new kakao.maps.Marker({
+									map : map, // 마커를 표시할 지도
+									position : new kakao.maps.LatLng(
+											data[i].pic_latitude,
+											data[i].pic_longitude)
+
+								// 마커의 위치
+								});
+							}
+							marker.setMap(map);
+						}
+					});
+				});
+		var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
+		mapOption = {
+			center : new kakao.maps.LatLng(35.896285, 128.622003), // 지도의 중심좌표
+			level : 13
+		// 지도의 확대 레벨
+		};
+
+		var map = new kakao.maps.Map(mapContainer, mapOption); // 지도를 생성합니다
+	
+		
+		// 마커가 표시될 위치입니다 
+		var markerPosition = new kakao.maps.LatLng(33.450701, 126.570667);
+</script>
+<div class="push" style="height:390px;"></div>
+<footer class="footer"  th:replace="include/footer"></footer>
+</body>
+</html>

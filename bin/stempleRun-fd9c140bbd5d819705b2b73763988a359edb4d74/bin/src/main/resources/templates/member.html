@@ -1,0 +1,11 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>stempleRun</title>
+</head>
+<body>
+	<p th:text=${member.m_name}></p>
+	<p th:text="#{home.welcome(${member.m_name})}"></p>
+</body>
+</html>

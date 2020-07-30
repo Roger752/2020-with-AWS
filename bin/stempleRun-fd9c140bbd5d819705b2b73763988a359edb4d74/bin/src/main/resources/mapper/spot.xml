@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.stempleRun.db.mapper.SpotMapper">
+	<select id="getPictures" resultType="com.stempleRun.db.dto.Picture">
+		select * from picture
+	</select>
+	<select id="getSearchList" resultType="com.stempleRun.db.dto.PostVO">
+		select * from post where p_title like '%'||#{keyword}||'%'
+	</select>
+</mapper>

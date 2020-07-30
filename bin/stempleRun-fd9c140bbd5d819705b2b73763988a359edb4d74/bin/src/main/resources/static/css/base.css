@@ -1,0 +1,128 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: 0;
+}
+body{
+    text-align: center;
+}
+
+.container{
+    margin-top: 70px;
+    width: 80%;
+    display: inline-block;
+    text-align: left;
+}
+.container > div{
+    width: 100%;
+    display: grid;
+    
+    gap: 10px;
+}
+.pholist{
+	margin-top: 100px;
+}
+.photoall{
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 10px;
+}
+
+.photoal2{
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 20px;
+}
+
+.bkcontainer {
+	display: inline-block;
+	width: 50%;
+}
+
+.bkform {
+	background-color: white;
+	margin-top: 50px;
+	z-index: 999;
+	padding: 20px;
+}
+
+.bkform>div {
+	display: grid;
+	grid-template-columns: 1fr;
+}
+
+.modalimg {
+	height: 234px
+}
+
+.contentbox {
+	text-align: left;
+}
+
+img {
+	width: 100%;
+	height: 100%;
+}
+
+
+.blackscreen {
+	display: none;
+	position: fixed;
+	width: 100%;
+	height: 100%;
+	background: rgba(0, 0, 0, 0.6);
+	text-align: center;
+	color: black;
+}
+
+.photoA {
+	height: 300px;
+}
+
+.hovera:hover {
+	cursor: pointer;
+	opacity: 0.6;
+	transition: all 0.5s;
+}
+
+.close {
+	text-align: right;
+	float: center;
+	cursor: pointer;
+	float: center;
+}
+.container2{
+    margin-top: 70px;
+    width: 80%;
+    display: inline-block;
+    text-align: left;
+}
+
+.photoadd{
+    display: grid;
+    gap: 10px;
+	grid-template-columns: 1fr 1fr;
+}
+
+.btnbox{
+	text-align: right;
+	
+}
+
+.btnbox > div{
+	display: inline-block;
+}
+
+.btn1{
+	margin-top: 10px;
+	display: inline-block;
+}
+
+.searchform{
+	display:grid;
+	grid-template-columns: 4fr 1fr;
+	gap:10px
+}
+
+
+

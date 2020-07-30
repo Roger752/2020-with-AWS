@@ -1,0 +1,221 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<script src="//code.jquery.com/jquery.min.js"></script>
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
+<script
+	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
+<script
+	src="https://dapi.kakao.com/v2/maps/sdk.js?appkey=59113c13fb94cdb62925a139a684253e&libraries=clusterer">
+	
+</script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+<link rel="stylesheet" href="<c:url value='/resources/common/css/common.css'/>" >
+
+
+
+<!-- 상단 메뉴바{s} -->
+
+<nav class="navbar navbar-expand-sm navbar-dark bg-dark">
+
+  <a class="navbar-brand" href="#">스탬플런</a>
+
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExample03" aria-controls="navbarsExample03" aria-expanded="false" aria-label="Toggle navigation">
+
+    <span class="navbar-toggler-icon"></span>
+
+  </button>
+
+
+
+  <div class="collapse navbar-collapse" id="navbarsExample03">
+
+    <ul class="navbar-nav mr-auto">
+
+      <li class="nav-item">
+
+        <a class="nav-link" th:href="@{/}"> 메인 페이지 <span class="sr-only">(current)</span></a>
+
+      </li>
+
+      <li class="nav-item">
+		<a class="nav-link dropdown-toggle" th:href="@{/}" data-toggle="dropdown"> 컬쳐 클라우드 </a>
+      	<div class="dropdown-menu">
+      		<a class="dropdown-item" th:href="@{/}">핫스팟</a>
+      		<a class="dropdown-item" th:href="@{/}">사진마당</a>
+      		<a class="dropdown-item" th:href="@{/}">컬처클라우드</a>
+      	</div>
+      </li>
+      <li class="nav-item dropdown">
+      	<a class="nav-link" th:href="@{/}"> 컨텐츠 관리 <span class="sr-only">(current)</span></a>
+      </li>
+      <li>
+      	<a class="nav-link" th:href="@{/}"> 리뷰,아이디어 게시판 <span class="sr-only">(current)</span></a>
+      </li>
+
+    </ul>
+
+    
+
+  </div>
+
+</nav>
+
+<!-- 상단 메뉴바{e} -->
+
+
+
+
+<style>
+.center {
+	width: 80%;
+}
+
+.rank {
+	float: left;
+}
+
+.container {
+	width: 40%;
+	float: right;
+}
+
+#map {
+	width: 40%;
+	float: right;
+}
+#search_global_photo{
+	float:left;
+}
+.photo_search{
+	float:left;
+}
+.form-control{
+	text-align:center;
+	float:left;
+}
+#day{
+	width:100px;
+	border:1px solid gray;
+	float:left;
+}
+#week{
+	width:100px;
+	border:1px solid gray;
+	float:left;
+}
+#month{
+	width:100px;
+	border:1px solid gray;
+	margin-right:20px;
+	float:left;
+}
+</style>
+<body>
+	<div class="hegger">
+		<div id="day">
+			<a th:href="@{/}">일간 랭킹</a>
+		</div>
+		<div id="week">
+			<a th:href="@{/}">주간 랭킹</a>
+		</div>
+		<div id="month">
+			<a th:href="@{/}">월간 랭킹</a>
+		</div>
+		<div id="search_global_photo">
+			<input type="text" class="form-control" placeholder="찾을 사진 검색">
+		</div>
+		<div>
+		<button class="photo_search" type="button">찾기</button>
+		</div>
+	</div>
+	<br>
+	<br>
+	<hr>
+	</div>
+	<div class="center">
+		<div class="container">
+			<hr />
+			<section id="container">
+			<form role="form" method="get">
+				<table class="table table-hover">
+					<thead>
+						<tr>
+							<th>제목</th>
+							<th>짧은글</th>
+							<th>작성일자</th>
+							<th>조회수</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr th:each="Post:${postList}">
+							<td th:text="${Post.p_title}"></td>
+							<td th:text="${Post.P_content}"></td>
+							<td th:text="${#dates.format(Post.p_day, 'yyyy-MM-dd')}"></td>
+							<td th:text="${Post.p_recommend}"></td>
+						</tr>
+					</tbody>
+				</table>
+			</form>
+			</section>
+		</div>
+	</div>
+	<div id="map" style="width: 400px; height: 500px;"></div>
+	<script>
+		var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
+		mapOption = {
+			center : new kakao.maps.LatLng(33.450701, 126.570667), // 지도의 중심좌표
+			level : 6
+		// 지도의 확대 레벨
+		};
+
+		var map = new kakao.maps.Map(mapContainer, mapOption); // 지도를 생성합니다
+		
+		var data = [
+			[35.896285, 128.622003,'<div style="padding:5px;">영진전문대학</div>'],
+			[35.899474, 128.638107,'<div style="padding:5px;">공항</div>']
+		];
+		
+		
+		// 미리 저장되어있는 마커들을 불러오는 for문
+		for(var i=0; i < data.length; i++) {
+			// 지도를 클릭한 위치에 표출할 마커입니다
+			var marker = new kakao.maps.Marker({
+				// 지도 중심좌표에 마커를 생성합니다 
+				position: new kakao.maps.LatLng(data[i][0], data[i][1]),
+				map: map
+			});
+			
+			// 인포윈도우를 생성합니다
+			var infowindow = new kakao.maps.InfoWindow({
+		    content : data[i][2] 
+			});
+		  		
+			// 마커 위에 인포윈도우를 표시합니다. 두번째 파라미터인 marker를 넣어주지 않으면 지도 위에 표시됩니다
+			infowindow.open(map, marker);
+		}
+		// 지도에 마커를 표시합니다
+		marker.setMap(map);
+
+		// 지도에 클릭 이벤트를 등록합니다
+		// 지도를 클릭하면 마지막 파라미터로 넘어온 함수를 호출합니다
+		kakao.maps.event.addListener(map, 'click', function(mouseEvent) {
+
+			// 클릭한 위도, 경도 정보를 가져옵니다 
+			var latlng = mouseEvent.latLng;
+
+			// 마커 위치를 클릭한 위치로 옮깁니다
+			marker.setPosition(latlng);
+
+			var resultDiv = document.getElementById('clickLatlng');
+			resultDiv.innerHTML = message;
+
+		});
+	</script>
+	</script>
+</body>
+</html>
+

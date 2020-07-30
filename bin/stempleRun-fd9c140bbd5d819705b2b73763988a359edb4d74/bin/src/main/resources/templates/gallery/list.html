@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="ko" xalns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+<title>Insert title here</title>
+<link rel="stylesheet" href="/webjars/bootstrap/3.3.5/css/bootstrap.min.css">
+</head>
+<style>
+.main {
+	width: 1135px;
+	height: 1000px;
+	border: solid 1px red;
+}
+
+.size {
+	width: 950px;
+	height: 75px;
+	margin-bottom: 25px;
+}
+
+ul li {
+	list-style-type: none;
+	float: left;
+}
+
+.underBar1 {
+	width: 780px;
+	border-bottom: 0px;
+	text-align: left;
+	margin-left: 25px;
+}
+
+.pic {
+	border: solid 1px red;
+	width: 800px;
+	height: 800px;
+	float: left;
+	margin-left: 80px;
+}
+</style>
+<body>
+	<!-- <div>
+		<ul>
+			<li th:each="post:${pageMaker}">
+				<p th:text=${post.p_num}></p>
+				<p th:text=${post.p_title}></p>
+				<p th:text=${post.p_content}></p>
+				<p th:text=${post.p_day}></p>
+				<p th:text="${post.format(p_day, 'yyyy-MM-dd HH:mm:ss')}"></p> 
+				<p th:text=${post.p_recommend}></p>
+				<p th:text=${post.p_file}></p>
+				<p th:text=${post.m_num}></p>
+				<p th:text=${post.pic_num}></p>
+
+			</li>
+		</ul>
+	</div> -->
+<div class="main">
+        <div class="size">
+            <ul>
+                <li id="list"style="margin-left:40px; border : solid 1px red;"><img src="이미지" width="30" height="30"></li>                    
+                <li style="margin-left:10px; margin-bottom:8px; border : solid 1px red;" widht="200" height="30";>사진마당</li>
+                <li style="margin-left:600px;"><select name="tag">
+                    <option value="popular">인기순</option>
+                    <option value="lately">최신순</option>
+                </select></li>
+                <hr class="underBar1">
+            </ul>
+        </div>
+        <div class="pic">
+        	<ul>
+        		<li th:each="post:${list}">
+        	
+            		<ul style="border : solid 1px red; width : 200px; height : 275px; float : left; margin-left:25px; padding-left: 0px; margin-bottom : 30px;">
+                		<li><img src="이미지"width="200" height="200";></li>
+                		<li><a th:id="${post.p_num}"><p th:text=${post.p_title} ></p></a>
+                		<p th:text=${post.p_recommend}></p></li>
+                		<br>
+        	    	</ul>
+          	  	</li>
+            </ul>
+        </div>
+</div>
+</body>
+<script>
+$('.pic ul a').click(function(){
+	$(location).attr('href','http://localhost:4007/gallery/detail/' + this.id);
+	});
+</script>
+</html>

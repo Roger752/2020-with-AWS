@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+<!DOCTYPE html>
+<head>
+    <title>리뷰게시판[리뷰작성]</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+    <style>
+        #footer{
+            position: absolute;
+            bottom: 0;
+            background: black;
+            left:0px;
+            bottom:0px;
+            height:60px;
+            width:100%;
+            text-align: center;
+        }
+    </style>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+</head>
+
+<body>
+<!--nav바 시작-->
+<nav class="navbar navbar-expand-sm bg-dark navbar-dark">
+    <!-- Brand/logo -->
+    <a class="navbar-brand" href="#">
+        <img src="css/logo2.png" alt="logo" style="width:35px;">
+    </a>
+    <div class="row">
+        <ul class="nav nav-item">
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#">문화재 길잡이</a>
+                <div class="dropdown-menu">
+                    <a class="dropdown-item" href="#">스토리 길잡이</a>
+                    <a class="dropdown-item" href="#">스토리 등록</a>
+                    <a class="dropdown-item" href="#">스토리 관리</a>
+                    <a class="dropdown-item" href="#">빙고 길잡이</a>
+                    <a class="dropdown-item" href="#">빙고 등록</a>
+                    <a class="dropdown-item" href="#">빙고 관리</a>
+                </div>
+            </li>
+        </ul>
+        <ul class="nav nav-item">
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#">컬처 클라우드</a>
+                <div class="dropdown-menu">
+                    <a class="dropdown-item" href="#">핫스팟</a>
+                    <a class="dropdown-item" href="#">사진마당</a>
+                    <a class="dropdown-item" href="#">포토클라우드</a>
+                </div>
+            </li>
+        </ul>
+        <ul class="nav nav-item">
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#">컨텐츠 관리</a>
+                <div class="dropdown-menu">
+                    <a class="dropdown-item" href="#">스토리 관리</a>
+                    <a class="dropdown-item" href="#">빙고 관리</a>
+                    <a class="dropdown-item" href="#">게임 관리</a>
+                    <a class="dropdown-item" href="#">포토 관리</a>
+                </div>
+            </li>
+        </ul>
+        <ul class="nav nav-item">
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#">리뷰,아이디어 게시판</a>
+                <div class="dropdown-menu">
+                    <a class="dropdown-item" href="#">리뷰 게시판</a>
+                    <a class="dropdown-item" href="#">스토리 리뷰</a>
+                    <a class="dropdown-item" href="#">빙고 리뷰</a>
+                    <a class="dropdown-item" href="#">아이디어 게시판</a>
+                    <a class="dropdown-item" href="#">스토리 아이디어</a>
+                    <a class="dropdown-item" href="#">빙고 아이디어</a>
+                </div>
+            </li>
+        </ul>
+    </div>
+    <div class="navbar-collapse w-500 ">
+        <ul class="navbar-nav ml-auto">
+            <li class="nav-item">
+                <a class="nav-link" href="#">송경진</a>
+            </li>
+        </ul>
+    </div>
+    <div class="text-warning">님 반갑습니다.</div>
+</nav>
+<br/><br/><br/><br/>
+
+	<div class="container">
+	    <article>
+	        <div class="container" role="main">
+	            <h1>리뷰작성</h1><hr>
+	            <form action="/review/insertProc" method="post">
+	                <div class="mb-3">
+	                    <label for="bno">글번호</label>
+	                    <input type="text" class="form-control" name="bno" placeholder="제목을 입력하세요.">
+	                </div>
+	                <div class="mb-3">
+	                    <label for="title">제목</label>
+	                    <input type="text" class="form-control" name="title" placeholder="제목을 입력하세요.">
+	                </div>
+	                <div class="mb-3">
+	                    <label for="type">종류</label>
+	                    <input type="text" class="form-control" name="type" placeholder="내용을 입력하세요.">
+	                </div>
+	                <div class="mb-3">
+	                    <label for="writer">작성자</label>
+	                    <textarea class="form-control" name="writer" rows="3"></textarea>
+	                </div>
+	                <div class="mb-3">
+	                    <button type="submit" class="btn btn-primary float-right">작성</button>
+	                </div>
+	            </form>
+	        </div>
+	    </article>
+	</div>	
+	</body>
+	<!--Footer-->
+	<div id="footer">
+	    <p class="text-white">문화재청 ｜ 이용안내 ｜ 개인정보처리방침 ｜ 저작권정책사이트  ｜ 오류신고</p>
+	</div>
+	
+</html>
+</body>
+</html>

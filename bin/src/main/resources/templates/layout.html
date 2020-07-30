@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+	th:fragment="layout(title, link, content)">
+<head>
+<meta charset="UTF-8">
+<link rel="stylesheet" type="text/css" href="/css/style.css"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css">
+<link rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css'>
+<link rel='stylesheet' href='https://fonts.googleapis.com/css?family=Open+Sans:400,300,700'>
+<link rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css'>
+<title th:replace="${title}"></title>
+<!-- 공통 파일 -->
+<script type="text/javascript"
+	th:src="@{https://code.jquery.com/jquery-3.4.1.min.js}"></script>
+<!-- 각 파일들 개별 추가 항목  -->
+<th:block th:replace="${link}" />
+</head>
+<body>
+
+	<th:block sec:authorize="isAuthenticated()">
+		<span sec:authentication="principal.username"></span>님 반가워요!
+		<form action="/logout" method="post">
+			<input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
+			<input type="submit" value="Logout">
+		</form>
+	</th:block>
+	<br>
+	<br>
+	<div th:replace="${content}"></div>
+	<!-- partial:index.partial.html -->
+<div class="wrapper">
+  <header role="header">
+    <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+      <div class="container">
+        <div class="navbar-header">
+          <button class="navbar-toggle collapsed" type="button" data-toggle="collapse" data-target=".navbar-collapse" role="button">
+            <span class="sr-only">Toggle Navigation</span>
+            
+            <span class="icon-bar"></span>
+            
+            <span class="icon-bar"></span>
+            
+            <span class="icon-bar"></span>
+          </button>
+
+          <a href="/" th:href="@{/}" class="navbar-brand">STEMPLERUN</a>
+        </div>
+
+        <div class="collapse navbar-collapse">
+          <ul class="nav navbar-nav navbar-right js-nav">
+				 <li><a href="/" th:href="@{/storymake/reg}">스토리길잡이</a></li>
+				 <li><a href="/" th:href="@{/bingo/bingoadd}">빙고길잡이</a></li>
+				 <li><a href="/" th:href="@{/gallery/testpage/day}">핫스팟</a></li>
+				 <li><a href="/" th:href="@{/gallery/list}">사진마당</a></li>
+				 <li><a href="/" th:href="@{/photoscloud/list}">포토 클라우드</a></li>
+				 <li><a href="/" th:href="@{/review/}">게시판</a></li>
+				 <li th:if="${#authorization.expr('isAuthenticated()')}">
+                 <form action="/logout" method="post">
+                    <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
+                    <input type="submit" value="로그아웃" style="margin:13px; background:#f8f8f8; border:solid 0px; font-size:16px; color:#777777;">
+                   </form>
+              </li>
+                  <li th:unless="${#authorization.expr('isAuthenticated()')}" ><a th:href="@{/login}">로그인</a></li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+  </header>
+
+  <section id="home" class="sec-main">
+    <h1 class="main-heading">StempleRun</h1>
+  </section>
+
+  <section id="about" class="sec-about">
+    <div class="container">
+      <h1>스 템 플 런</h1>
+      <hr />
+
+      <div class="row">
+        <div class="col-sm-6 col-sm-offset-3">
+          <p>역사학습의 한 부분인 역사 체험학습에 중점을 두고 기획한 시스템이며,<br>
+             증강현실과 사물인터넷을 기반으로 한 역사학습 시스템 &nbsp&nbsp<a href="#">'STEMPLERUN'</a></p>
+        </div>
+      </div>
+    </div>
+  </section>
+  <section id="services" class="sec-services">
+    <div class="container">
+      <h1>문 화 재 길 잡 이</h1>
+
+      <hr />
+
+      <div class="row">
+        <div class="col-sm-4">
+          <i class="fa fa-4x fa-paint-brush"></i>
+
+          <h2 class="h3">스토리길잡이</h2>
+
+          <p>스토리텔링을 활용한 역사학습</p>
+        </div>
+
+        <div class="col-sm-4">
+          <i class="fa fa-4x fa-code"></i>
+
+          <h2 class="h3">빙고길잡이</h2>
+
+          <p>빙고게임을 활용한 역사학습</p>
+        </div>
+
+        <div class="col-sm-4">
+          <i class="fa fa-4x fa-tablet"></i>
+
+          <h2 class="h3">IoT전통놀이</h2>
+
+          <p>IoT를 활용한 역사학습 전통놀이</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="folio" class="sec-folio">
+    <div class="container">
+      <h1>사 진 마 당</h1>
+
+      <hr />
+
+      <div class="row">
+        <div class="col-md-4">
+          <img class="center-block" src="https://ifh.cc/g/RdeLar.jpg" alt="By Håkon Sataøen" />
+        </div>
+
+        <div class="col-md-4">
+          <img class="center-block" src="https://ifh.cc/g/LVn1e2.jpg" alt="By Samuel Zeller" />
+        </div>
+
+        <div class="col-md-4">
+          <img class="center-block" src="https://ifh.cc/g/IBKPmT.jpg" alt="By Scott Webb" />
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-4">
+          <img class="center-block" src="https://ifh.cc/g/vVMPTl.jpg" alt="By Has Bonk" />
+        </div>
+
+        <div class="col-md-4">
+          <img class="center-block" src="https://ifh.cc/g/frqs5m.jpg" alt="By Scott Webb" />
+        </div>
+
+        <div class="col-md-4">
+          <img class="center-block" src="https://ifh.cc/g/cjpQjk.jpg" alt="By Daniel Lozano Valdés" />
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="testimonials" class="sec-testimonials">
+    <div class="container">
+      <h1>HotSpot Services</h1>
+
+      <hr />
+
+      <div class="row">
+        <div class="col-sm-4">
+          <p class="text-center">"핫스팟으로 아름다운 추억을 만들어보세요"</p><br><br><br>
+
+          <p class="text-right">&mdash; HotSpot System</p>
+        </div>
+
+        <div class="col-sm-4">
+          <p class="text-center">"랭킹 데이터를 통한 나만의 포토스팟을 찾으세요!"</p><br><br><br>
+
+          <p class="text-right">&mdash; Rank System</p>
+        </div>
+
+        <div class="col-sm-4">
+          <p class="text-center">"나만의 핫스팟을 AR포인터로 등록 및 공유하세요!"</p><br><br><br>
+
+          <p class="text-right">&mdash; HotSpot Sharing System</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="contact" class="sec-contact">
+    <div class="container">
+      <h1>포토 클라우드</h1>
+
+      <hr />
+
+      <div class="row">
+        <div class="col-sm-4 col-sm-offset-4">
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer id="footer">
+    <div class="container">
+      <ul class="soc-media-ul">
+        <li>
+          <a href="https://twitter.com/AlexDevero" class="fa fa-instagram" target="_blank"></a>
+        </li>
+
+        <li>
+          <p class="text-muted">&nbsp copyright © & StempleRun. all rights reserved</p>
+        </li>
+      </ul>
+    </div>
+  </footer>
+</div>
+<!-- partial -->
+  <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
+<script src='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js'></script><script  src="./script.js"></script>
+	
+</body>
+</html>

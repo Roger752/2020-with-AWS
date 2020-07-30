@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="utf-8">
+<title>문화재 등록</title>
+</head>
+<body>
+
+	<div>
+		<h1>문화재 등록</h1>
+		<hr>
+		<br>
+	</div>
+
+	
+
+	<div>
+		<label>문화재 이름</label><br>
+		<input id="c_name" type="text" placeholder="문화재를 입력해주세요">
+	</div>
+
+
+
+	<div id="map" style="width: 900px; height: 500px;"></div>
+
+	<p><em>지도를 클릭해주세요!</em></p> 
+	<div id="clickLatlng"></div>
+	<div id="test"></div>
+
+	<div>
+		<button id="c_save">저장</button>
+		<button>취소</button>
+	</div>
+	
+	<form action="", method="post">
+		<input type="hidden" id="save_data" name="save_data" value="Sample Data">
+	</form>
+
+	
+	<script src="https://dapi.kakao.com/v2/maps/sdk.js?appkey=4f9c5b41cdef9519134cf34d948fca04&libraries=clusterer"></script>
+	<script src="https://code.jquery.com/jquery-3.4.1.js"></script>
+
+
+	<script th:inline="javascript">
+	
+		var data = [[${cultureList}]];
+		
+		console.log(data);
+		
+		
+		var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
+		mapOption = {
+			center : new kakao.maps.LatLng(35.896285, 128.622003), // 지도의 중심좌표
+			level : 14
+		// 지도의 확대 레벨
+		};
+	
+		var map = new kakao.maps.Map(mapContainer, mapOption); // 지도를 생성합니다
+
+		
+		// 마커 클러스터러를 생성합니다 
+	    var clusterer = new kakao.maps.MarkerClusterer({
+	        map: map, // 마커들을 클러스터로 관리하고 표시할 지도 객체 
+	        averageCenter: true, // 클러스터에 포함된 마커들의 평균 위치를 클러스터 마커 위치로 설정 
+	        minLevel: 10 // 클러스터 할 최소 지도 레벨 
+	    });
+		
+		
+		// 마커들을 클러스터러로 묶기위한 변수
+		var markers = [];
+		
+		
+		// 미리 저장되어있는 마커들을 불러오는 for문
+		for(var i=0; i < data.length; i++) {
+			// 지도를 클릭한 위치에 표출할 마커입니다
+			var marker = new kakao.maps.Marker({
+				// 마커를 생성합니다 
+				position: new kakao.maps.LatLng(data[i].c_latitude, data[i].c_longitude),
+				map: map
+			});
+			
+			// 인포윈도우를 생성합니다
+			var infowindow = new kakao.maps.InfoWindow({
+		    content : data[i].c_name
+			});
+		  		
+			
+			// 마커 클러스터러에 마커들 담기
+			markers.push(marker);
+			
+			kakao.maps.event.addListener(marker, 'mouseover', makeOverListener(map, marker, infowindow));
+		    kakao.maps.event.addListener(marker, 'mouseout', makeOutListener(infowindow));
+		}
+		
+		// 클러스터러에 마커들을 추가합니다
+        clusterer.addMarkers(markers);
+    	
+		
+     // 인포윈도우를 표시하는 클로저를 만드는 함수입니다 
+        function makeOverListener(map, marker, infowindow) {
+            return function() {
+                infowindow.open(map, marker);
+            };
+        }
+
+        // 인포윈도우를 닫는 클로저를 만드는 함수입니다 
+        function makeOutListener(infowindow) {
+            return function() {
+                infowindow.close();
+            };
+        }
+		
+		
+        
+        
+		
+		
+		
+		// 새로 등록할 마커
+		var marker = new kakao.maps.Marker({ 
+		    // 황해쪽에 마커를 생성합니다 
+			position: new kakao.maps.LatLng(35.964498, 123.806448)
+		}); 
+		
+			
+		// 새로 찍은 마커에 대한 데이터가 들어갈 변수
+		var newData = [];
+		
+		
+		
+		
+		// 지도에 클릭 이벤트를 등록합니다
+		// 지도를 클릭하면 마지막 파라미터로 넘어온 함수를 호출합니다
+		kakao.maps.event.addListener(map, 'click', function(mouseEvent) {
+
+			// 지도에 등록될 마커를 표시합니다
+			marker.setMap(map);
+			
+			var check = document.getElementById('c_name').value;
+			
+			if(check.length == 0) {
+				alert("먼저 문화재 이름을 입력해주세요");
+				return;
+			}
+			
+			
+			// 클릭한 위도, 경도 정보를 가져옵니다 
+			var latlng = mouseEvent.latLng;
+
+			// 마커 위치를 클릭한 위치로 옮깁니다
+			marker.setPosition(latlng);
+
+			var message = '클릭한 위치의 위도는 ' + latlng.getLat() + ' 이고, ';
+			message += '경도는 ' + latlng.getLng() + ' 입니다';
+
+			var resultDiv = document.getElementById('clickLatlng');
+			resultDiv.innerHTML = message;
+			
+			var c_name = document.getElementById("c_name").value;
+			
+			// 마커를 여러번 할수 있기 때문에 배열에 여러개가 들어가는것을 막는 if문
+			if(newData.length < 1) {
+				newData.push([latlng.getLat(), latlng.getLng(),c_name]);
+			}
+			else {
+				newData.pop();
+				newData.push([latlng.getLat(), latlng.getLng(), c_name]);
+			}
+			console.log(newData);
+			
+		});
+		
+		
+		
+		$(document).ready(function() {
+			$("#c_save").on("click", function() {
+
+				var setData = {
+						c_latitude: newData[0][0],
+						c_longitude: newData[0][1],
+						c_name: newData[0][2]
+				}
+				
+				$.ajax({
+					url: "/culture/save",
+					type: "POST",
+					data: setData,
+					success: function(data) {
+						alert("성공");
+						location.reload(true);
+					},
+					error: function(jqXHR, textStatus, errorThrown) {
+						alert(jqXHR.responseText);
+					}
+					
+				});
+			});
+		});
+			
+	</script>
+
+</body>
+</html>

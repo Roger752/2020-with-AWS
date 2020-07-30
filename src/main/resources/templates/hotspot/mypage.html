@@ -1,0 +1,88 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<script src="//code.jquery.com/jquery.min.js"></script>
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
+<script
+	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
+
+</head>
+<body>
+	<div class="1">
+		<a>최종 접속 일자: </a>
+		<p th:text="${#calendars.format(#calendars.createNow(), 'yyyy-MM-dd HH:mm:ss')}"></p>
+	</div>
+	<th:block sec:authorize="isAuthenticated()">
+		로그인한 유저: <span sec:authentication="principal.username"/>
+	</th:block>
+	<div>
+	</div>
+	<div >
+		<div>
+		
+		</div>
+	</div>
+	<br>
+	<hr>
+	<div>
+	<div>
+			<div>
+				<a th:href="@{/}">스토리 길잡이</a>
+			</div>
+			<div>
+				<h3>진행중인 스토리</h3><br>
+			</div>
+			<div th:each="story:${story}">
+				<a th:text="${story.s_title}"></a><br>
+				<a th:text="${story.s_content}"></a>
+			</div>
+		</div>
+		<div>
+			<div>
+				<a th:href="@{/}">빙고 길잡이</a>
+			</div>
+			<div>
+				<h3>최근 실행중인 빙고</h3>
+				<div th:each="bingoshot:${bingo}">
+					<a th:text="'진행중 :' + ${bingoshot.b_title}"></a><br>
+					<a th:text="${bingoshot.b_content}"></a>
+				</div>
+			</div>
+		</div>
+		
+		<div >
+			<div>
+				<a th:href="@{/}">내 랭킹은 어디일까?</a>
+			</div>
+			<div>
+			<div>
+				<ul>
+					<li th:each="post:${postweek}">
+						<a th:text="'주간 랭킹:' + ${post.rk} + '위'"></a><br><br>
+						<img th:src="${post.pic_file}" width="150px" height="100px">
+						<p th:text="${post.p_title}"></p>
+						<p th:text="${post.p_content}"></p>
+					</li>
+				</ul>
+				<ul>
+					<li th:each="past:${postmonth}">
+						<a th:text="'월간 랭킹:' + ${past.rk} + '위'"></a><br><br>
+						<img th:src="${past.pic_file}" width="150px" height="100px">
+						<p th:text="${past.p_title}"></p>
+						<p th:text="${past.p_content}"></p>
+					</li>
+				</ul>
+				
+				</div>
+			</div>
+		</div>
+		
+	</div>
+
+</body>
+</html>

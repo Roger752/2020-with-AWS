@@ -1,0 +1,125 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<script src="//code.jquery.com/jquery.min.js"></script>
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
+<script
+	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
+<style>
+.container {
+	width: 80%;
+}
+
+li {
+	list-style: none;
+}
+
+.1 {
+	width: 30%;
+	float: left;
+}
+
+.2 {
+	float: right;
+}
+
+.story {
+	font-size: 30px;
+}
+
+#myunder {
+	width: 90%;
+}
+
+.storyside {
+	width: 30%;
+	float: left;
+	text-align:center;
+}
+
+.bingoside {
+	width: 30%;
+	float: left;
+	text-align:center;
+}
+.bingo{
+	font-size:30px;
+}
+.rankside{
+	width:30%;
+	float: left;
+}
+.rank{
+	font-size:30px;
+}
+</style>
+</head>
+<body>
+	<div class="1">
+		<a>최종 접속 일자: </a>
+		<p th:text="${#calendars.format(#calendars.createNow(), 'yyyy-MM-dd HH:mm:ss')}"></p>
+	</div>
+	<div >
+		<div>
+		
+		</div>
+	</div>
+	<br>
+	<hr>
+	<div>
+	<div>
+			<div>
+				<a th:href="@{/}">스토리 길잡이</a>
+			</div>
+			<div th:each="story:${story}">
+				<a>진행중인 스토리</a><br>
+				<a th:text="${story.s_title}"></a><br>
+				<a th:text="${story.s_content}"></a>
+			</div>
+		</div>
+		<div>
+			<div>
+				<a th:href="@{/}">빙고 길잡이</a>
+			</div>
+			<div>
+				<a>최근 실행중인 빙고</a>
+				<div th:each="bingoshot:${bingo}">
+					<a th:text="'진행중 :' + ${bingoshot.b_title}"></a><br>
+					<a th:text="${bingoshot.b_content}"></a>
+				</div>
+			</div>
+		</div>
+		
+		<div >
+			<div>
+				<a th:href="@{/}">내 랭킹은 어디일까?</a>
+			</div>
+			<div>
+			<div>
+				<ul th:each="picture:${pictureList}">
+					<li th:each="post:${postweek}">
+						<a th:text="'주간 랭킹:' + ${post.p_num} + '위'"></a><br><br>
+						<img th:src="${picture.pic_file}" width="150px" height="100px">
+						<p th:text="${post.p_title}"></p>
+						<p th:text="${post.p_content}"></p>
+					</li>
+					<li class="mrank" th:each="posts:${postmonth}">
+						<a th:text="'월간랭킹:' + ${posts.p_num} +'위'"></a><br><br>		
+						<img th:src="${picture.pic_file}" width="150px" height="100px">
+						<p th:text="${posts.p_title}"></p>
+						<p th:text="${posts.p_content}"></p>						
+					</li>
+				</ul>
+				</div>
+			</div>
+		</div>
+		
+	</div>
+
+</body>
+</html>

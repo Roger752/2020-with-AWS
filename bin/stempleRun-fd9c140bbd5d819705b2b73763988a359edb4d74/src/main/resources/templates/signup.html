@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<title>회원가입</title>
+<meta charset="UTF-8">
+<header th:replace="include/header"></header>
+<link rel="stylesheet" type="text/css" href="/css/signup.css"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css">
+<link rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css'>
+<link rel='stylesheet' href='https://fonts.googleapis.com/css?family=Open+Sans:400,300,700'>
+<link rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css'>
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+</head>
+<body>
+<!-- 	<h1>회원가입</h1> -->
+
+<!-- 	<form method="post" th:action="@{/member/signupProc}" onsubmit="return join()"> -->
+<!-- 		<div> -->
+<!-- 			<input type="radio" name="type_num" value=1>일반회원 -->
+<!-- 			<input type="radio" name="type_num" value=2>문화재청 -->
+<!-- 		</div> -->
+<!-- 		<div>  -->
+<!-- 			<input type="text" class="m_id" name="m_id" placeholder="아이디"> -->
+<!-- 			<button type="button" onclick="javascript:idcheck()">중복확인</button> -->
+<!-- 		</div> -->
+<!-- 		<div> -->
+<!-- 			<input type="password" class="m_pw" name="m_pw" placeholder="비밀번호"> -->
+<!-- 		</div> -->
+<!-- 		<div> -->
+<!-- 			<input type="password" class="m_pw2" placeholder="비밀번호 확인"> -->
+<!-- 		</div> -->
+<!-- 		<div> -->
+<!-- 			<input type="text" name="m_name" placeholder="이름"> -->
+<!-- 		</div> -->
+<!-- 		<div> -->
+<!-- 			<input type="email" class="m_email" name="m_email" placeholder="이메일"> -->
+<!-- 		</div> -->
+<!-- 		<button type="submit" class="btn btn-primary">가입</button> -->
+<!-- 		<button onclick="location.href='/login'">취소</button> -->
+<!-- 	</form> -->
+	<br>	<br>	<br>	<br>	<br>
+	
+	 <form th:action="@{/member/signupProc}" onsubmit="return join()" method="post">
+      
+        <h1>Sign Up</h1>
+        
+        <fieldset>
+
+<!--           <label>TYPE:</label><br> -->
+<!-- <!--           <input type="radio" name="type_num" value=1 class="light">일반회원</label><br> --> 
+<!-- <!--           <input type="radio" name="type_num" value=2 class="light">문화재청</label><br><br> -->
+<!--           <label>TYPE:</label><br>
+          <input type="radio" name="type_num" value=1 class="light">일반회원</label><br>
+          <input type="radio" name="type_num" value=2 class="light">문화재청</label><br><br> -->
+
+
+          <label for="name">ID:</label><a class="btn btn-default" style="float:right" onclick="javascript:idcheck()">중복확인</a>
+          <input type="text" class="m_id" name="m_id">
+          
+          <label for="mail">PASSWORD:</label>
+          <input type="password" class="m_pw" name="m_pw">
+          
+          <label for="password">CONFIRM PASSWORD:</label>
+          <input type="password" class="m_pw2">
+
+          <label for="password">NAME:</label>
+          <input type="text" name="m_name">
+
+          <label for="password">E_MAIL:</label>
+          <input type="email" class="m_email" name="m_email">
+          
+          <button type="submit">가입</button>
+          <button type="submit" onclick="location.href='/login'">취소</button>
+        </fieldset>
+      </form>
+      
+      
+	<script>
+		var check = 0;
+
+		function idcheck() {
+			var m_id = document.querySelector('.m_id').value;
+			$.ajax({
+				url : '/member/idcheck/' + m_id,
+				type : 'GET',
+				success : function(res) {
+					if (res == 1) {
+						alert("사용 가능한 아이디 입니다.");
+						check = 1;
+					} else {
+						alert("일치하는 아이디가 있습니다.");
+					}
+				},
+				error : function() {
+					alert("error");
+				}
+			})
+
+		}
+
+		function join() {
+			if (check != 1) {
+				alert('ID 중복확인을 해주세요');
+				return false;
+			}
+
+			var pw1 = document.querySelector('.m_pw').value;
+			var pw2 = document.querySelector('.m_pw2').value;
+
+			if (m_pw != m_pw2) {
+				alert("비밀번호가 일치하지 않습니다.");
+				pw1 = "";
+				pw2 = "";
+				check = 0;
+			}
+
+			if (check == 1) {
+				alert("가입 성공");
+			}
+
+		}
+	</script>
+</body>
+</html>

@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Insert Form</title>
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+<link rel="stylesheet" th:href="@{/css/base.css}">
+</head>
+<body>
+	<h2>사진 등록</h2>
+	<form th:action="@{/photoscloud/insertProc}" method="post"
+		enctype="multipart/form-data">
+
+		<div class="container">
+			<section class="photoadd">
+				<div class="photo_left">
+					<img id="img" />
+					<div class="filebox">
+						<!--사진등록 -->
+						<label for="pic_file"></label>
+						<div class="photosee" style="height: 100%; margin-bottom: 10px;">
+							<img src="" style="height: 350px;" />
+						</div>
+						<input type="file" id="pic_file" name="pic_file" class="path_img"
+							required="required" onchange="photosee(this);" />
+					</div>
+				</div>
+
+
+				<div class=photo_right>
+					<div>
+						<label for="pic_title">제목</label> <input type="text"
+							class="form-control" id="pic_title" name="pic_title"
+							placeholder="제목을 입력하세요.">
+					</div>
+
+					<div>
+						<label for="pic_content">사진 설명</label>
+						<textarea class="form-control" id="pic_content" name="pic_content"
+							rows="3"></textarea>
+					</div>
+
+					<div>
+						<label for="pic_tag">태그</label> <input type="text"
+							class="form-control" id="pic_tag" name="pic_tag"
+							placeholder="태그를 입력하세요.">
+					</div>
+					<div>
+						SNS <br> <label> <input type="checkbox"
+							name="pic_sns" value="photo">사진마당
+						</label> <label> <input type="checkbox" name="pic_sns"
+							value="twitter">twitter
+						</label> <label> <input type="checkbox" name="pic_sns"
+							value="facebook"> facebook
+						</label> <label> <input type="checkbox" name="pic_sns"
+							value="instagram"> instagram
+						</label>
+					</div>
+
+					<div>
+						<label for="pic_place">장소</label> <input type="text"
+							class="form-control" id="pic_place" name="pic_place"
+							placeholder="장소를 입력하세요.">
+					</div>
+				</div>
+			</section>
+			<div style="margin-top: 10px;" class="btnbox">
+				<div>
+					<button type="submit" class="btn btn-primary btn1" style="width:50%;">등록</button>
+					<button onclick="location.href='/photoscloud/list'" style="width:50%;"
+						class="btn btn-primary btn1">취소</button>
+				</div>
+			</div>
+		</div>
+	</form>
+	<script>
+		$("#pic_file").change(
+				function() {
+					if (this.files && this.files[0]) {
+						var reader = new FileReader;
+						reader.onload = function(data) {
+							$(".photosee img").attr("src", data.target.result)
+									.width(500);
+						}
+						reader.readAsDataURL(this.files[0]);
+					}
+				});
+	</script>
+</body>
+</html>
+
+

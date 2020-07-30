@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<html xmlns:th="http://www.thymeleaf.org">
+<header th:replace="include/header"></header>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<script src="//code.jquery.com/jquery.min.js"></script>
+
+</head>
+<body>
+<div class="container">
+	<br><br><br><br><br>
+	<div>
+		<div>
+			<div class="search_button button">
+				<button id="day" type="button" class="btn btn-primary">일간</button>
+				<button id="week" type="button" class="btn btn-primary">주간</button>
+				<button id="month" type="button" class="btn btn-primary">월간</button>
+			</div>
+			<br>
+			<form action="/hotspot/hotspot_locate">
+			<div>
+				<input name="keyword" type="text" placeholder="검색할 내용">
+			</div>
+			<button>검색하기</button>
+		</form>
+		</div>
+	</div>
+
+
+	<div class="row">
+		<div>
+			<div>
+				<section>
+				<form role="form" method="get">
+					<table class="table table-hover">
+						<thead>
+							<tr>
+								<th>제목</th>
+								<th>짧은글</th>
+								<th>작성일자</th>
+								<th>조회수</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr class="godetail" th:each="Post:${postList}">
+								<td th:id="${Post.p_num}" th:text="${Post.p_num}"></td>
+								<td th:id="${Post.p_num}" th:text="${Post.P_title}"></td>
+								<td th:id="${Post.p_num}"
+									th:text="${#dates.format(Post.p_day, 'yyyy-MM-dd')}"></td>
+								<td th:id="${Post.p_num}" th:text="${Post.p_recommend}"></td>
+							</tr>
+						</tbody>
+					</table>
+				</form>
+				</section>
+			</div>
+		</div>
+	</div>
+</div>
+<!--Footer-->
+<div class="push" style="height:460px;"></div>
+<footer class="footer" th:replace="include/footer"></footer>
+	<script>
+	$('.search_button button').click(function() {
+		$(location).attr('href', 'http://localhost:4007/hotspot/hotspot_main/' + this.id);
+	});
+	$('.godetail td').click(function(){
+		$(location).attr('href','http://localhost:4007/gallery/detail/' + this.id);
+		});
+	</script>
+</form>
+</body>
+</html>
